@@ -4,8 +4,6 @@ from django.db.models import Avg, Sum
 from .models import TripCount
 from .settings.routes import ROUTES_DICT
 
-# don't need a tasks.py because celery is running independently of django (as of now)
-
 # Create your views here.
 def index(request):
 

@@ -1,0 +1,178 @@
+System check identified some issues:
+
+WARNINGS:
+?: (urls.W001) Your URL pattern '^.*$' uses include with a regex ending with a '$'. Remove the dollar from the regex to avoid problems including URLs.
+
+System check identified 1 issue (0 silenced).
+[10/Jan/2016 04:11:42] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 04:11:42] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 04:11:42] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 04:11:43] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 04:11:58] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 04:11:58] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 04:11:58] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 04:11:59] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 04:12:20] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 04:12:20] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 04:12:20] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 04:12:21] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 04:12:22] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 04:12:22] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 04:12:22] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 04:12:23] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 04:12:26] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 04:12:26] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 04:12:26] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 04:12:27] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 04:12:34] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 04:12:34] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 04:12:34] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 04:12:35] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 04:12:36] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 04:12:36] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 04:12:36] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 04:12:37] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 04:12:39] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 04:12:39] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 04:12:39] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 04:12:40] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 04:12:41] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 04:12:41] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 04:12:41] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 04:12:42] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 04:12:44] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 04:12:44] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 04:12:44] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 04:12:44] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 04:12:48] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 04:12:48] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 04:12:48] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 04:12:49] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 04:13:15] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 04:13:15] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 04:13:15] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 04:13:17] "GET /favicon.ico HTTP/1.1" 200 4027
+System check identified some issues:
+
+WARNINGS:
+?: (urls.W001) Your URL pattern '^.*$' uses include with a regex ending with a '$'. Remove the dollar from the regex to avoid problems including URLs.
+
+System check identified 1 issue (0 silenced).
+[10/Jan/2016 04:45:00] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 04:45:00] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 04:45:00] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 04:45:02] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 05:02:30] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 05:02:30] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:02:30] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:02:32] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 05:05:15] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 05:05:16] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:05:16] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:05:17] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 05:09:43] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 05:09:43] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:09:43] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:09:44] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 05:09:47] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 05:09:47] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:09:47] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:09:48] "GET /favicon.ico HTTP/1.1" 200 4027
+System check identified some issues:
+
+WARNINGS:
+?: (urls.W001) Your URL pattern '^.*$' uses include with a regex ending with a '$'. Remove the dollar from the regex to avoid problems including URLs.
+
+System check identified 1 issue (0 silenced).
+[10/Jan/2016 05:13:03] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 05:13:04] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:13:04] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:13:05] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 05:14:58] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 05:14:59] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:14:59] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:15:00] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 05:15:02] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 05:15:02] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:15:02] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:15:03] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 05:15:16] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 05:15:16] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:15:16] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:15:18] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 05:15:23] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 05:15:23] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:15:23] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:15:24] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 05:15:26] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 05:15:26] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:15:26] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:15:27] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 05:15:29] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 05:15:29] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:15:29] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:15:30] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 05:15:33] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 05:15:33] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:15:33] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:15:34] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 05:15:36] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 05:15:36] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:15:36] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:15:37] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 05:16:15] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 05:16:15] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:16:15] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:16:16] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 05:16:17] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 05:16:17] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:16:17] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:16:17] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 05:16:45] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 05:16:45] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:16:45] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:16:45] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 05:16:46] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 05:16:46] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:16:46] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:16:47] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 05:17:00] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 05:17:00] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:17:00] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:17:02] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 05:17:09] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 05:17:09] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:17:09] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:17:10] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 05:17:29] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 05:17:29] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:17:29] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:17:30] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 05:18:16] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 05:18:16] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:18:16] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:18:17] "GET /favicon.ico HTTP/1.1" 200 4027
+[10/Jan/2016 05:18:19] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 05:18:19] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:18:19] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:18:20] "GET /favicon.ico HTTP/1.1" 200 4027
+System check identified some issues:
+
+WARNINGS:
+?: (urls.W001) Your URL pattern '^.*$' uses include with a regex ending with a '$'. Remove the dollar from the regex to avoid problems including URLs.
+
+System check identified 1 issue (0 silenced).
+[10/Jan/2016 05:19:37] "GET / HTTP/1.1" 200 4027
+[10/Jan/2016 05:19:37] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:19:37] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:19:38] "GET /favicon.ico HTTP/1.1" 200 4027
+System check identified some issues:
+
+WARNINGS:
+?: (urls.W001) Your URL pattern '^.*$' uses include with a regex ending with a '$'. Remove the dollar from the regex to avoid problems including URLs.
+
+System check identified 1 issue (0 silenced).
+[10/Jan/2016 05:26:44] "GET / HTTP/1.1" 200 4026
+[10/Jan/2016 05:26:44] "GET /static/scraper/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:26:44] "GET /static/css/stylesheet.css HTTP/1.1" 304 0
+[10/Jan/2016 05:26:46] "GET /favicon.ico HTTP/1.1" 200 4026

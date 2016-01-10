@@ -1,0 +1,6 @@
+Performing system checks...
+
+January 10, 2016 - 05:19:28
+Django version 1.9, using settings 'mbta_django.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
