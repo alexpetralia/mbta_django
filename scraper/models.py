@@ -10,8 +10,8 @@ class CompletedTrip(models.Model):
 	route = models.CharField(max_length=200)
 	start_location = models.CharField(max_length=200)
 	end_location = models.CharField(max_length=200)
-	start_time = models.DateTimeField()
-	end_time = models.DateTimeField()
+	start_time = models.CharField(max_length=200) # datetimes must be stored as strings because Django ORM cannot query and return a postgres timestamp field without returning a Segmentation Fault
+	end_time = models.CharField(max_length=200)
 	duration = models.DurationField(default = datetime.timedelta(days=0))
 
 	def __str__(self):

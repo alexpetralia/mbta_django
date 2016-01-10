@@ -1,8 +1,12 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.db.models import Avg, Sum
 
-from .models import TripCount
+from .models import TripCount, CompletedTrip
 from .settings.routes import ROUTES_DICT
+
+import pandas as pd
+# from datetime import datetime as dt
 
 # Create your views here.
 def index(request):
@@ -42,6 +46,16 @@ def get_direction(route):
 		direction = None
 
 	return direction
+
+def get_avg_trip_time(request):
+
+	fmt = "%Y-%m-%d %H:%M:%S"
+	queryset = CompletedTrip.objects.all().values('start_time', 'duration')
+	df = pd.DataFrame.from_records(queryset)
+	df = df.set_index(pd.to_datetime(df['start_time'])).drop('start_time', axis=1)
+	df = df.resample('M', how='mean')
+
+	return JsonResponse(df.to_json(), safe=False)
 
 
 # Get average number of trips over time

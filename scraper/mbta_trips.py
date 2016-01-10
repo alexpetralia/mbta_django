@@ -215,6 +215,7 @@ class Trip():
         Once a trip is completed, it is written to the postgres database.
         """
 
+        fmt = "%Y-%m-%d %H:%M:%S"
         trip = CompletedTrip(
             trip_id = self.trip_id,
             vehicle_id = self.vehicle_id,
@@ -222,8 +223,8 @@ class Trip():
             route = self.route,
             start_location = self.start_location,
             end_location = self.end_location,
-            start_time = self.start_time,
-            end_time = self.end_time,
+            start_time = dt.strftime(self.start_time, fmt),
+            end_time = dt.strftime(self.end_time, fmt),
             duration = self.duration,
             )
         trip.save()

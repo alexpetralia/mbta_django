@@ -19,5 +19,5 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^.*$', include('scraper.urls')),
+    url(r'^', include('scraper.urls')), # do not use a $ at the end in root URLconf.. it means no child app URLs can be appended
 ]
