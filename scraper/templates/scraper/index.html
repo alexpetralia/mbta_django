@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load get_key %}
+
+{% block content %}
+
+<div class='spacer'></div>
+
+<h1><strong>Currently active MBTA trips</strong></h3>	
+
+<div class='spacer'></div>
+
+<div class='container-fluid'>
+
+	<div class='first row'>
+		<div class='col-lg-3 col-md-3 col-sm-3 thirds'>
+			<div class='col-lg-12'>
+				<div class='red block'> </div>
+				<h3> Red Line </h3>
+				<span class='big'>{{ trips|get:"Red Line" }}</span>
+				<h4> ({{ num_trips|get:"Red Line" }}) </h4>
+			</div>
+		</div>
+		<div class='col-lg-3 col-md-3 col-sm-3 thirds'>
+			<div class='col-lg-12'>
+				<div class='orange block'> </div>
+				<h3> Orange Line </h3>
+				<span class='big'>{{ trips|get:"Orange Line" }}</span>
+				<h4> ({{ num_trips|get:"Orange Line" }}) </h4>
+			</div>
+		</div>
+		<div class='col-lg-3 col-md-3 col-sm-3 thirds'>
+			<div class='col-lg-12'>
+				<div class='blue block'> </div>
+				<h3> Blue Line </h3>
+				<span class='big'>{{ trips|get:"Blue Line" }}</span>
+				<h4> ({{ num_trips|get:"Blue Line" }}) </h4>
+			</div>
+		</div>
+	</div>
+
+	<div class='spacer'></div>
+
+	<div id='reveal' style='display: none; width: 1080px; height: 400px;'> </div>
+
+	<div class='row'>
+		<div class='col-lg-3 col-md-3 col-sm-3'>
+			<div class='col-lg-12'>
+				<div class='green block'> </div>
+				<h3> Green Line B </h3>
+				<span class='big'>{{ trips|get:"Green Line B" }}</span>
+				<h4> ({{ num_trips|get:"Green Line B" }}) </h4>
+			</div>
+		</div>
+		<div class='col-lg-3 col-md-3 col-sm-3'>
+			<div class='col-lg-12'>
+				<div class='green block'> </div>
+				<h3> Green Line C </h3>
+				<span class='big'>{{ trips|get:"Green Line C" }}</span>
+				<h4> ({{ num_trips|get:"Green Line C" }}) </h4>
+			</div>
+		</div>
+		<div class='col-lg-3 col-md-3 col-sm-3'>
+			<div class='col-lg-12'>
+				<div class='green block'> </div>
+				<h3> Green Line D </h3>
+				<span class='big'>{{ trips|get:"Green Line D" }}</span>
+				<h4> ({{ num_trips|get:"Green Line D" }}) </h4>
+			</div>
+		</div>
+		<div class='col-lg-3 col-md-3 col-sm-3'>
+			<div class='col-lg-12'>
+				<div class='green block'> </div>
+				<h3> Green Line E </h3>
+				<span class='big'>{{ trips|get:"Green Line E" }}</span>
+				<h4> ({{ num_trips|get:"Green Line E" }}) </h4>
+			</div>
+		</div>
+	</div>
+
+	<div class='spacer'></div>
+
+	<div class='row'>
+		<div class='col-lg-3 col-md-3 col-sm-3'>
+			<div class='col-lg-12'>
+				<div class='silver block'> </div>
+				<h3> Silver Line SL1  </h3>
+				<span class='big'>{{ trips|get:"Silver Line SL1" }}</span>
+				<h4> ({{ num_trips|get:"Silver Line SL1" }}) </h4>
+			</div>
+		</div>
+		<div class='col-lg-3 col-md-3 col-sm-3'>
+			<div class='col-lg-12'>
+				<div class='silver block'> </div>
+				<h3> Silver Line SL2 </h3>
+				<span class='big'>{{ trips|get:"Silver Line SL2" }}</span>
+				<h4> ({{ num_trips|get:"Silver Line SL2" }}) </h4>
+			</div>
+		</div>
+		<div class='col-lg-3 col-md-3 col-sm-3'>
+			<div class='col-lg-12'>
+				<div class='silver block'> </div>
+				<h3> Silver Line SL4 </h3>
+				<span class='big'>{{ trips|get:"Silver Line SL4" }}</span>
+				<h4> ({{ num_trips|get:"Silver Line SL4" }}) </h4>
+			</div>
+		</div>
+		<div class='col-lg-3 col-md-3 col-sm-3'>
+			<div class='col-lg-12'>
+				<div class='silver block'> </div>
+				<h3> Silver Line SL5 </h3>
+				<span class='big'>{{ trips|get:"Silver Line SL5" }}</span>
+				<h4> ({{ num_trips|get:"Silver Line SL5" }}) </h4>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<br /> <br />
+<p><i>* Numbers in (parentheses) show the average number of trips for that route.</i></p>
+<p><i>* This will not work after hours because it queries the last values in the database.</i></p>
+
+{% endblock %}

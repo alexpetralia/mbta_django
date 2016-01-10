@@ -1,0 +1,15 @@
+[2016-01-03 18:15:47,258: WARNING/MainProcess] /home/alexpetralia/Projects/mbta_django/venv/local/lib/python2.7/site-packages/celery/fixups/django.py:265: UserWarning: Using settings.DEBUG leads to a memory leak, never use this setting in production environments!
+  warnings.warn('Using settings.DEBUG leads to a memory leak, never '
+
+[2016-01-03 18:15:47,258: WARNING/MainProcess] celery@linux-box ready.
+[2016-01-03 18:17:59,381: WARNING/MainProcess] /home/alexpetralia/Projects/mbta_django/venv/local/lib/python2.7/site-packages/celery/fixups/django.py:265: UserWarning: Using settings.DEBUG leads to a memory leak, never use this setting in production environments!
+  warnings.warn('Using settings.DEBUG leads to a memory leak, never '
+
+[2016-01-03 18:17:59,382: WARNING/MainProcess] celery@linux-box ready.
+[2016-01-03 18:18:03,802: WARNING/MainProcess] Exception
+[2016-01-03 18:18:03,802: WARNING/MainProcess] KeyError
+[2016-01-03 18:18:03,802: WARNING/MainProcess] :
+[2016-01-03 18:18:03,802: WARNING/MainProcess] KeyError(140458484320064,)
+[2016-01-03 18:18:03,803: WARNING/MainProcess] in
+[2016-01-03 18:18:03,803: WARNING/MainProcess] <module 'threading' from '/usr/lib/python2.7/threading.pyc'>
+[2016-01-03 18:18:03,803: WARNING/MainProcess] ignored

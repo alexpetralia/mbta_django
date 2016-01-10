@@ -1,0 +1,10 @@
+django
+postgres
+celery
+supervisord
+bootstrap.css
+jquery.js
+plotly.js
+* memcached
+* gunicorn
+* nginx

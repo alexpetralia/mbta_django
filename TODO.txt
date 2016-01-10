@@ -1,0 +1,7 @@
+TODO:
+
+- git push
+- set up on server (celery, supervisor, django, postgres, gunicorn, nginx, associate fqdn)
+- plotly data inputs
+- Ajax refreshes every 10 seconds
+- memcached
