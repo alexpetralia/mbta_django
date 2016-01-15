@@ -5,6 +5,7 @@ supervisord
 bootstrap.css
 jquery.js
 plotly.js
+jinja2
 * memcached
 * gunicorn
 * nginx

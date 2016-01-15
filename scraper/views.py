@@ -1,4 +1,3 @@
-from django.http import JsonResponse
 from django.shortcuts import render
 from django.db.models import Avg, Sum
 
@@ -6,7 +5,7 @@ from .models import TripCount, CompletedTrip
 from .settings.routes import ROUTES_DICT
 
 import pandas as pd
-# from datetime import datetime as dt
+import numpy as np
 
 # Create your views here.
 def index(request):
@@ -36,6 +35,11 @@ def index(request):
 
 		num_trips[route] = avg_num_trips_rounded.strip()
 
+	# Average trip times
+	avg_trip_times_all = get_avg_trip_times()
+	filter = ('Red Line', 'Blue Line', 'Orange Line', 'Green Line B', 'Green Line C', 'Green Line D', 'Green Line E', 'Silver Line SL1', 'Silver Line SL2', 'Silver Line SL4', 'Silver Line SL5',) # can only pass routes into the dict that have associated plotly charts. if a route is passed without one, no plotly chart will display
+	avg_trip_times = {k:v for k, v in avg_trip_times_all.items() if k in filter}
+
 	return render(request, "scraper/index.html", locals())
 
 def get_direction(route):
@@ -47,16 +51,50 @@ def get_direction(route):
 
 	return direction
 
-def get_avg_trip_time(request):
+def get_avg_trip_times():
 
-	fmt = "%Y-%m-%d %H:%M:%S"
-	queryset = CompletedTrip.objects.all().values('start_time', 'duration')
+	# Convert QuerySet of first 1,000 rows to pd.DataFrame
+	queryset = CompletedTrip.objects.all().values('start_time', 'route', 'duration')[0:1000]
 	df = pd.DataFrame.from_records(queryset)
+
+	# Set dataframe index as datetime
 	df = df.set_index(pd.to_datetime(df['start_time'])).drop('start_time', axis=1)
-	df = df.resample('M', how='mean')
 
-	return JsonResponse(df.to_json(), safe=False)
+	# Get unique routes as returned by QuerySet
+	routes = df['route'].unique()
 
+	json = {}
+	for route in routes:
+		
+		# Take route subset from the entire query
+		route_df = df[df['route'] == route].copy()
+		route_df.drop('route', axis=1, inplace=True)
+		route_df = route_df.between_time('5:00', '2:30')
+
+		# Calculate minute-level durations, averaged by week
+		route_df = route_df.groupby(route_df.index.weekday).resample('15Min', how=lambda x: np.sum(x) / len(x)).dropna() # np.mean does not work
+		route_df = route_df.astype('<m8[ns]') # convert Ints back to timestamps
+
+		# Reset index
+		route_df = route_df.sort_index().reset_index().drop('level_0', axis=1)
+
+		# Format as strings for json serialization
+		route_df = route_df.astype(str)
+		route_df['duration'] = route_df['duration'].str.split().str[-1]
+
+		# Convert objects to list for json serialization
+		x_values = list(route_df['start_time'].values)
+		y_values = map(lambda x: '2016-01-01 '+x, list(route_df['duration'].values))
+
+
+		# Append to dictionary
+		json[route] = {'x': x_values, 'y': y_values}
+
+	return json
+
+# original numpy: 1.10.4
+# original pandas: 0.17.1
 
 # Get average number of trips over time
 # Group by direction A, direction B
+# https://plot.ly/javascript/reference/

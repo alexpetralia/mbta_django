@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load get_key %}
 
 {% block content %}
 
@@ -13,111 +12,164 @@
 
 	<div class='first row'>
 		<div class='col-lg-3 col-md-3 col-sm-3 thirds'>
-			<div class='col-lg-12'>
+			<div id="Red Line" class='col-lg-12'>
 				<div class='red block'> </div>
 				<h3> Red Line </h3>
-				<span class='big'>{{ trips|get:"Red Line" }}</span>
-				<h4> ({{ num_trips|get:"Red Line" }}) </h4>
+				<span class='big'>{{ trips["Red Line"] }}</span>
+				<h4> ({{ num_trips["Red Line"] }}) </h4>
 			</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3 thirds'>
-			<div class='col-lg-12'>
+			<div id="Orange Line" class='col-lg-12'>
 				<div class='orange block'> </div>
 				<h3> Orange Line </h3>
-				<span class='big'>{{ trips|get:"Orange Line" }}</span>
-				<h4> ({{ num_trips|get:"Orange Line" }}) </h4>
+				<span class='big'>{{ trips["Orange Line"] }}</span>
+				<h4> ({{ num_trips["Orange Line"] }}) </h4>
 			</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3 thirds'>
-			<div class='col-lg-12'>
+			<div id="Blue Line" class='col-lg-12'>
 				<div class='blue block'> </div>
 				<h3> Blue Line </h3>
-				<span class='big'>{{ trips|get:"Blue Line" }}</span>
-				<h4> ({{ num_trips|get:"Blue Line" }}) </h4>
+				<span class='big'>{{ trips["Blue Line"] }}</span>
+				<h4> ({{ num_trips["Blue Line"] }}) </h4>
 			</div>
 		</div>
 	</div>
 
 	<div class='spacer'></div>
 
-	<div id='reveal' style='display: none; width: 1080px; height: 400px;'> </div>
+	<div id='Red Line_reveal' class='plotly' style='display: none; width: 1080px; height: 400px;'> </div>
+
+	<div id='Orange Line_reveal' class='plotly'  style='display: none; width: 1080px; height: 400px;'> </div>
+
+	<div id='Blue Line_reveal' class='plotly' style='display: none; width: 1080px; height: 400px;'> </div>
 
 	<div class='row'>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div class='col-lg-12'>
+			<div id='Green Line B' class='col-lg-12'>
 				<div class='green block'> </div>
 				<h3> Green Line B </h3>
-				<span class='big'>{{ trips|get:"Green Line B" }}</span>
-				<h4> ({{ num_trips|get:"Green Line B" }}) </h4>
+				<span class='big'>{{ trips["Green Line B"] }}</span>
+				<h4> ({{ num_trips["Green Line B"] }}) </h4>
 			</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div class='col-lg-12'>
+			<div id='Green Line C' class='col-lg-12'>
 				<div class='green block'> </div>
 				<h3> Green Line C </h3>
-				<span class='big'>{{ trips|get:"Green Line C" }}</span>
-				<h4> ({{ num_trips|get:"Green Line C" }}) </h4>
+				<span class='big'>{{ trips["Green Line C"] }}</span>
+				<h4> ({{ num_trips["Green Line C"] }}) </h4>
 			</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div class='col-lg-12'>
+			<div id='Green Line D' class='col-lg-12'>
 				<div class='green block'> </div>
 				<h3> Green Line D </h3>
-				<span class='big'>{{ trips|get:"Green Line D" }}</span>
-				<h4> ({{ num_trips|get:"Green Line D" }}) </h4>
+				<span class='big'>{{ trips["Green Line D"] }}</span>
+				<h4> ({{ num_trips["Green Line D"] }}) </h4>
 			</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div class='col-lg-12'>
+			<div id='Green Line E' class='col-lg-12'>
 				<div class='green block'> </div>
 				<h3> Green Line E </h3>
-				<span class='big'>{{ trips|get:"Green Line E" }}</span>
-				<h4> ({{ num_trips|get:"Green Line E" }}) </h4>
+				<span class='big'>{{ trips["Green Line E"] }}</span>
+				<h4> ({{ num_trips["Green Line E"] }}) </h4>
 			</div>
 		</div>
 	</div>
 
 	<div class='spacer'></div>
 
+	<div id='Green Line B_reveal' class='plotly' style='display: none; width: 1080px; height: 400px;'> </div>
+
+	<div id='Green Line C_reveal' class='plotly'  style='display: none; width: 1080px; height: 400px;'> </div>
+
+	<div id='Green Line D_reveal' class='plotly' style='display: none; width: 1080px; height: 400px;'> </div>
+
+	<div id='Green Line E_reveal' class='plotly' style='display: none; width: 1080px; height: 400px;'> </div>
+
 	<div class='row'>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
 			<div class='col-lg-12'>
-				<div class='silver block'> </div>
+				<div id='Silver Line SL1' class='silver block'> </div>
 				<h3> Silver Line SL1  </h3>
-				<span class='big'>{{ trips|get:"Silver Line SL1" }}</span>
-				<h4> ({{ num_trips|get:"Silver Line SL1" }}) </h4>
+				<span class='big'>{{ trips["Silver Line SL1"] }}</span>
+				<h4> ({{ num_trips["Silver Line SL1"] }}) </h4>
 			</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div class='col-lg-12'>
+			<div id='Silver Line SL2' class='col-lg-12'>
 				<div class='silver block'> </div>
 				<h3> Silver Line SL2 </h3>
-				<span class='big'>{{ trips|get:"Silver Line SL2" }}</span>
-				<h4> ({{ num_trips|get:"Silver Line SL2" }}) </h4>
+				<span class='big'>{{ trips["Silver Line SL2"] }}</span>
+				<h4> ({{ num_trips["Silver Line SL2"] }}) </h4>
 			</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div class='col-lg-12'>
+			<div id='Silver Line SL4' class='col-lg-12'>
 				<div class='silver block'> </div>
 				<h3> Silver Line SL4 </h3>
-				<span class='big'>{{ trips|get:"Silver Line SL4" }}</span>
-				<h4> ({{ num_trips|get:"Silver Line SL4" }}) </h4>
+				<span class='big'>{{ trips["Silver Line SL4"] }}</span>
+				<h4> ({{ num_trips["Silver Line SL4"] }}) </h4>
 			</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div class='col-lg-12'>
+			<div id='Silver Line SL5' class='col-lg-12'>
 				<div class='silver block'> </div>
 				<h3> Silver Line SL5 </h3>
-				<span class='big'>{{ trips|get:"Silver Line SL5" }}</span>
-				<h4> ({{ num_trips|get:"Silver Line SL5" }}) </h4>
+				<span class='big'>{{ trips["Silver Line SL5"] }}</span>
+				<h4> ({{ num_trips["Silver Line SL5"] }}) </h4>
 			</div>
 		</div>
 	</div>
+
+	<div class='spacer'></div>
+
+	<div id='Silver Line SL1_reveal' class='plotly' style='display: none; width: 1080px; height: 400px;'> </div>
+
+	<div id='Silver Line SL2_reveal' class='plotly'  style='display: none; width: 1080px; height: 400px;'> </div>
+
+	<div id='Silver Line SL4_reveal' class='plotly' style='display: none; width: 1080px; height: 400px;'> </div>
+
+	<div id='Silver Line SL5_reveal' class='plotly' style='display: none; width: 1080px; height: 400px;'> </div>
 
 </div>
 
 <br /> <br />
 <p><i>* Numbers in (parentheses) show the average number of trips for that route.</i></p>
 <p><i>* This will not work after hours because it queries the last values in the database.</i></p>
+
+<script>
+
+// PLOTLY.JS
+
+{% for key, value in avg_trip_times.items() %}
+var data = [
+  {
+    x: {{ value['x']|safe }},
+    y: {{ value['y']|safe }},
+    type: 'scatter'
+  }
+];
+var layout = { paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)', title: "<b>{{key}}</b>", };
+Plotly.plot("{{key}}_reveal", data, layout, {showLink: false});
+{% endfor %}
+
+// JQUERY
+
+$(document).ready(function() {
+
+	{% for key, value in avg_trip_times.iteritems() %}
+    $("div[id='{{key}}']").click(function() {
+		// $(".plotly").not("#{{key}}_reveal").hide(speed=500);
+		$("div[id='{{key}}_reveal']").toggle(speed=500);
+
+    });
+    {% endfor %}
+});
+
+</script>
 
 {% endblock %}
