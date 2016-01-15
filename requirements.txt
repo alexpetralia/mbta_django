@@ -7,11 +7,12 @@ billiard==3.3.0.22
 celery==3.1.19
 certifi==2015.11.20.1
 Django==1.9
-django-model-utils==2.4
-django-pandas==0.3.1
+django-jinja==2.1.1
 flower==0.8.3
 futures==3.0.3
+Jinja2==2.8
 kombu==3.0.32
+MarkupSafe==0.23
 meld3==1.0.2
 numpy==1.10.4
 pandas==0.17.1

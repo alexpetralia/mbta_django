@@ -92,9 +92,5 @@ def get_avg_trip_times():
 
 	return json
 
-# original numpy: 1.10.4
-# original pandas: 0.17.1
 
-# Get average number of trips over time
-# Group by direction A, direction B
 # https://plot.ly/javascript/reference/
