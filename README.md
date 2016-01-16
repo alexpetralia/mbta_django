@@ -9,17 +9,17 @@ The primary motivation for this project was to visualize when certain routes are
 While I don't anticipate anyone thoroughly replicating this installation, outlining the general steps could prove useful for those use a similar stack.
 Ensure your default Python environment uses Python 2, not Python 3. You can check this by running `python` in your terminal to see which version you are using.
 
-\\**1. Ensure your Ubuntu distrubtion is up-to-date**
+**1. Ensure your Ubuntu distrubtion is up-to-date**
 
 `sudo apt-get update && sudo apt-get dist-upgrate`
 
-\\**2. Clone the repository**
+**2. Clone the repository**
 
 Within your projects folder that will house the mbta\_django repo, enter: 
 
 `sudo git clone https://github.com/alexpetralia/mbta_django/`
 
-\\**3. Create a new virtual environment**
+**3. Create a new virtual environment**
 
 I would advise against using `python3-venv` because it will default to Python 3 for package installation. This is problematic when installing `supervisord`, which requires Pyhon 2. I also advise against Anaconda's virtual environment manager with this specific project. Within the "mbta_django folder", run:
 
@@ -29,11 +29,11 @@ To activate your virtual environment, use `source venv/bin/activate`. I recommen
 
 If you run into permissions issues, do **not** use `sudo` to circumvent them. If you do, everything you do in the virtual environment will require `sudo` as well, but enjoy getting `sudo pip` to work neatly. Rather, change ownership of the "mbta_django" folder to your username: `sudo chown -R user:group venv`. Then, retry the command above.
 
-\\**4. Install the postgres server**
+**4. Install the postgres server**
 
 `sudo apt-get install postgresql postgresql-contrib`
 
-\\**5. Configure postgres and create your database**
+**5. Configure postgres and create your database**
 
 For this django web application to work, django requires certain postgres settings. They are as follows:
 
@@ -50,7 +50,7 @@ Run the following commands:
 
 Accessing the interactive prompt (at least on an AWS EC2 instance) can be tricky. I used `psl postgres -h 127.0.0.1 -d mbta` to get around the the default behavior of using Unix sockets and instead use TCP/IP. Once you are in the interactive prompt, you can run your normal SQL commands (eg. "SELECT * FROM table WHERE...").
 
-\\**6. Install and run the rabbitmq message-broker server**
+**6. Install and run the rabbitmq message-broker server**
 
 I used [this](http://monkeyhacks.com/post/installing-rabbitmq-on-ubuntu-14-04) tutorial to install RabbitMQ. Those steps (slightly modified here) are:
 
@@ -61,19 +61,19 @@ I used [this](http://monkeyhacks.com/post/installing-rabbitmq-on-ubuntu-14-04) t
 
 Your RabbitMQ server should install automatically.
 
-\\**7. Install python-dev**
+**7. Install python-dev**
 
 `sudo apt-get install python-dev`
 
 This is required for the pandas module to install correctly.
 
-\\**8. Get your own API key**
+**8. Get your own API key**
 
 Register for an account [here](http://realtime.mbta.com/Portal/Account/Register) and request an API key.
 
 Once you receive an API key, create an `api_key.py` in the folder mbta\_django/scraper/settings. It contains only one line: `API_KEY = <your\_api\_key\_here>`
 
-\\**9. Install all the remaining Python packages**
+**9. Install all the remaining Python packages**
 
 `(venv)>> pip install -r requirements.txt`
 
