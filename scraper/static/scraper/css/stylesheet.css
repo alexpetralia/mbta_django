@@ -18,6 +18,7 @@ h3 {
 .col-lg-12 {
 	padding: 5% 0;
 	text-align: center;
+	font
 }
 
 .spacer {
@@ -38,30 +39,30 @@ h3 {
 	height: 100%;
 	width: 100%;
 	position: absolute;
-	border-radius: 10px;
+	border-radius: 7px;
 }
 
 .red {
 	background-color: rgba(248, 0, 0, .3);
-	border: 10px solid rgba(200, 0, 0, .15);
+	border: 5px solid rgba(200, 0, 0, .1);
 }
 
 .orange {
 	background-color: rgba(255, 153, 0, .3);
-	border: 10px solid rgba(200, 0, 0, .15);
+	border: 5px solid rgba(200, 0, 0, .1);
 }
 
 .blue {
 	background-color: rgba(0, 0, 204, .3);
-	border: 10px solid rgba(0, 0, 204, .15);
+	border: 5px solid rgba(0, 0, 204, .1);
 }
 
 .green {
 	background-color: rgba(0, 153, 0, .3);
-	border: 10px solid rgba(0, 153, 0, .15);
+	border: 5px solid rgba(0, 153, 0, .1);
 }
 
 .silver {
 	background-color: rgba(80, 80, 80, .3);
-	border: 10px solid rgba(80, 80, 80, .15);
+	border: 5px solid rgba(80, 80, 80, .1);
 }

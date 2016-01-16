@@ -102,7 +102,7 @@ You should also `chmod u+x manage.py` so you don't have to type python in everyt
 * celery
 * rabbitmq
 * supervisord (to do on server)
-* bootstrap.css
+* bootstrap 3
 * jquery.js
 * plotly.js
 

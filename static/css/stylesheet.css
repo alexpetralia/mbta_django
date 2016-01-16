@@ -1,5 +1,5 @@
 body {
-	background-color: #f3f3f3;
-   	transform: scale(.8);
+	background-color: rgba(170, 170, 242, 0);
+   	transform: scale(.75);
    	transform-origin: 50% -5%;
 }
