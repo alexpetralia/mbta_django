@@ -76,7 +76,7 @@ def get_avg_trip_times():
 		route_df = route_df.astype('<m8[ns]') # convert Ints back to timestamps
 
 		# Reset index
-		route_df = route_df.sort_index().reset_index().drop('level_0', axis=1)
+		route_df = route_df.reset_index().drop('level_0', axis=1).sort_values('start_time')
 
 		# Format as strings for json serialization
 		route_df = route_df.astype(str)
@@ -85,7 +85,6 @@ def get_avg_trip_times():
 		# Convert objects to list for json serialization
 		x_values = list(route_df['start_time'].values)
 		y_values = map(lambda x: '2016-01-01 '+x, list(route_df['duration'].values))
-
 
 		# Append to dictionary
 		json[route] = {'x': x_values, 'y': y_values}

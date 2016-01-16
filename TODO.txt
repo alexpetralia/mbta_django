@@ -1,8 +1,0 @@
-TODO:
-
-- set up on server (venv, celery, supervisor, django, postgres, gunicorn, nginx, associate fqdn)
-- pandas filtering for erroneous trips
-- pandas groupby only within 1 week timeframe.. "an average week"
-- jquery only 1 plot at a time
-- Ajax refreshes every 10 seconds
-- memcached for redundant queries
