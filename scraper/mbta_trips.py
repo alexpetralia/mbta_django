@@ -4,7 +4,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 os.chdir(BASE_DIR)
 
-from datetime import datetime as dt
+from datetime import timedelta, datetime as dt
 import requests
 import time
 import logging
@@ -12,6 +12,8 @@ import logging
 from .settings.api_key import API_KEY
 from .settings.routes import ROUTES
 from .models import CompletedTrip, TripCount
+
+WAIT_TIME_SEC = 10
 
 class Route():
     
@@ -30,7 +32,7 @@ class Route():
         Updates all of the Direction objects.
         
         Parameters:
-        ``json`` (list): the Requests JSON list. Root parents of json tree must be ['direction'].
+        ``json`` (list): the Requests JSON list. Root parents of .json tree must be ['direction'].
         
         Return values:
         ``None``
@@ -77,7 +79,7 @@ class Direction():
         Updates all of the Trip objects.
         
         Parameters:
-        ``curr_trips_json`` (list): the Requests JSON list. Root parents of json tree must be ['trip_id'].
+        ``curr_trips_json`` (list): the Requests JSON list. Root parents of .json tree must be ['trip_id'].
         
         Return values:
         ``None``
@@ -110,16 +112,22 @@ class Direction():
             trip_obj = self.pre_update_trips[pre_update_trip_id]
             trip_id = trip_obj.get()['Trip ID']
             
-            # If pre-update trip is not in current trips, it has terminated
+            # If pre-update trip is not in current trips, it may have terminated
             if trip_id not in curr_trip_ids:
-                trip_obj.end_trip()
-                del self.updated_trips[trip_id]
-                finished_trips.append(trip_obj)
-                
-                # Only write to postgres if finished_trip 
-                # is not a trip beginning before runtime               
-                if trip_id not in self.ignored_trips:
-                    trip_obj.write_trip_to_sql()
+
+                # Give the trip n attempts to rediscover the same trip_id if it does not appear in the .json temporarily
+                waiting_bool = trip_obj.retry()
+
+                # If waiting_bool is false (ie. no more retries available), end the trip
+                if not waiting_bool:
+
+                    trip_obj.end_trip()
+                    del self.updated_trips[trip_id]
+                    finished_trips.append(trip_obj)
+                    
+                    # Only write to postgres if finished_trip is not a trip beginning before runtime               
+                    if trip_id not in self.ignored_trips:
+                        trip_obj.write_trip_to_sql()
                 
         # Update set of pre_updated trips after extracting new/finished trips
         self.pre_update_trips = self.updated_trips.copy()
@@ -149,10 +157,11 @@ class Direction():
             route = self.route_name,
             )
 
-        try: # pull the most recent trip for this direction/route
+        # If the current amount of trips differs from the last saved value in the database, update the database
+        try: # pull the most recent trip count for this direction/route
             all_trips = TripCount.objects.filter(direction = self.direction_name, route = self.route_name).order_by('-time')
             last_count = all_trips.values()[0]['count'] 
-        except IndexError: # ie. returned query set is None
+        except IndexError: # ie. returned QuerySetis None
             last_count = -1 # write first trips to database
         finally:
             if last_count != len(curr_trips):
@@ -161,8 +170,12 @@ class Direction():
 class Trip():
     
     """
-    Each trip that is added to the json response is created as a Trip object. 
+    Each trip that is added to the .json response is created as a Trip object. 
     """
+
+    global WAIT_TIME_SEC
+    TOTAL_SECONDS_TO_WAIT = 180
+    MAX_RETRIES = TOTAL_SECONDS_TO_WAIT / WAIT_TIME_SEC
     
     def __init__(self, trip_id, vehicle_id, location, direction, route):
         self.trip_id = trip_id
@@ -175,15 +188,7 @@ class Trip():
         self.end_time = None
         self.duration = None
         self.curr_location = None
-                
-    def end_trip(self):
-        
-        """
-        Once `end_trip` is called, the `duration` is evaluated as the difference between the end and start time of the trip.
-        """
-        
-        self.end_time = dt.now()
-        self.duration = self.end_time - self.start_time
+        self.retries = 0
         
     def get(self):
         
@@ -200,14 +205,37 @@ class Trip():
                  "Start time": format(self.start_time),
                  "End time": format(self.end_time),
                  "Duration": format(self.duration) }
+
+    def retry(self):
+
+        """
+        Checks how many retries have been attempted to rediscover a trip with the same trip_id. If number of retries is fewer than RETRIES_MAX, increment self.retries and return True.
+        """
+
+        if self.retries <= Trip.MAX_RETRIES:
+            self.retries += 1
+            return True
+        else:
+            return False
                  
     def update_location(self, location):
         
         """
-        Updates the `end_location` as the current location. If the Trip disappears from the json response, that current location is the last known location, and therefore the end location.
+        Updates the `end_location` as the current location. If the Trip disappears from the .json response, that current location is the last known location, and therefore the end location.
         """
         
         self.end_location = location
+
+    def end_trip(self):
+    
+        """
+        Once `end_trip` is called, the `duration` is evaluated as the difference between the end and start time of the trip.
+
+        A caveat: because the program checks for trips that disappear and then reappear for TOTAL_SECONDS_TO_WAIT seconds, genuine trips must have this duration subtracted from their final recorded end time.
+        """
+        
+        self.end_time = dt.now() - timedelta(0, Trip.TOTAL_SECONDS_TO_WAIT)
+        self.duration = self.end_time - self.start_time
         
     def write_trip_to_sql(self):
         
@@ -249,7 +277,7 @@ def get_relevant_trips(all_trips_json):
     The MBTA API initializes a trip with in the format: <vehicle_ID>_[0,1]. The trip is then removed once the car starts moving and renamed to format: <trip_id>_[0,1]. Initialized trips should be ignored (ie. if trip_id == vehicle_id), while only moving trips should count. This is a known bug by the MBTA.
     
     Parameters:
-    ``all_trips_json`` (dict): the Requests JSON dictionary. Root parents of json tree must be ['vehicle'].
+    ``all_trips_json`` (dict): the Requests JSON dictionary. Root parents of .json tree must be ['vehicle'].
         
     Return values:
     ``relevant_trips_json`` (list): a filtered list of only trips whose vehicle_ids do not equal their trip_ids
@@ -350,7 +378,8 @@ def main():
         
         logger.info("*** Starting next .json dump... ***")
         
-        time.sleep(10)
+        global WAIT_TIME_SEC
+        time.sleep(WAIT_TIME_SEC)
 
 if __name__ == "__main__":   
     

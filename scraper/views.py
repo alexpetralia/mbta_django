@@ -51,9 +51,13 @@ def get_direction(route):
 
 	return direction
 
+def calc_mad(data):
+
+    return np.median(np.absolute(data - np.median(data)))
+
 def get_avg_trip_times():
 
-	# Convert QuerySet of first 1,000 rows to pd.DataFrame
+	# Convert QuerySet to pd.DataFrame
 	queryset = CompletedTrip.objects.all().values('start_time', 'route', 'duration')[0:1000]
 	df = pd.DataFrame.from_records(queryset)
 
@@ -70,6 +74,13 @@ def get_avg_trip_times():
 		route_df = df[df['route'] == route].copy()
 		route_df.drop('route', axis=1, inplace=True)
 		route_df = route_df.between_time('5:00', '2:30')
+
+		# Remove spurious results from lognormal dist of trip lengths
+		med = np.median(route_df['duration'])
+		# mad = calc_mad(route_df['duration'])
+		buffer_mins = med * .1
+		lowerLim, upperLim = med - 3 * buffer_mins, med + 10 * buffer_mins
+		route_df = route_df[(route_df['duration'] > lowerLim) & (route_df['duration'] < upperLim)]
 
 		# Calculate minute-level durations, averaged by week
 		route_df = route_df.groupby(route_df.index.weekday).resample('15Min', how=lambda x: np.sum(x) / len(x)).dropna() # np.mean does not work
@@ -90,6 +101,3 @@ def get_avg_trip_times():
 		json[route] = {'x': x_values, 'y': y_values}
 
 	return json
-
-
-# https://plot.ly/javascript/reference/

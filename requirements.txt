@@ -10,6 +10,7 @@ Django==1.9
 django-jinja==2.1.1
 flower==0.8.3
 futures==3.0.3
+gunicorn==19.4.5
 Jinja2==2.8
 kombu==3.0.32
 MarkupSafe==0.23

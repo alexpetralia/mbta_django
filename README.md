@@ -2,11 +2,11 @@
 
 MBTA Trips is a django-powered web application which displays, for each MBTA route in Boston, the number of currently active MBTA trips and the average trip duration over a typical week. Every 10 seconds, a `celery` background worker scrapes .json data from the [MBTA Developer Portal](http://realtime.mbta.com/portal) containing information on all ongoing trips. The time at which new trips (*see footnote 1*) appear is saved, as well as when they disappear - the difference yields the trip's duration. Each completed trip is saved in a postgres database.
 
-The primary motivation for this project was to visualize when certain routes are busiest throughout a typical week. Additionally, however, this project was designed around using as many new technologies as possible; prior to this, I had limited to no experience with any of the software listed below.
+The primary motivation for this project was to visualize when certain routes are busiest throughout a typical week. Additionally, this project was designed around using as many new technologies as possible as a learning experience.
 
 ### Installation for Ubuntu Linux
 
-While I don't anticipate anyone thoroughly replicating this installation, outlining the general steps could prove useful for those use a similar stack.
+While I don't anticipate anyone thoroughly replicating this installation, outlining the general steps could prove useful for those with a similar stack.
 Ensure your default Python environment uses Python 2, not Python 3. You can check this by running `python` in your terminal to see which version you are using.
 
 **1. Ensure your Ubuntu distrubtion is up-to-date**
@@ -25,9 +25,9 @@ I would advise against using `python3-venv` because it will default to Python 3 
 
 `virtualenv venv` (uses the existing "venv" directory that you cloned)
 
-To activate your virtual environment, use `source venv/bin/activate`. I recommend creating an `alias` in your `~/.bashrc` so you don't have to type that command in each time you need to activate your virtual environment.
+To activate your virtual environment, use `source venv/bin/activate`. I recommend creating an `alias` in your `~/.bashrc` so you don't have to type that command each time you need to activate your virtual environment.
 
-If you run into permissions issues, do **not** use `sudo` to circumvent them. If you do, everything you do in the virtual environment will require `sudo` as well, but enjoy getting `sudo pip` to work neatly. Rather, change ownership of the "mbta_django" folder to your username: `sudo chown -R user:group venv`. Then, retry the command above.
+If you run into permissions issues, do **not** use `sudo` to circumvent them. If you do, everything you do in the virtual environment will require `sudo` as well, which you don't want. Rather, change ownership of the "mbta_django" folder to your username: `sudo chown -R user:group venv`. Then, retry the command above.
 
 **4. Install the postgres server**
 
@@ -43,14 +43,14 @@ database_name: 'mbta'<br />
 
 Run the following commands:
 
-`sudo -u postgres psql postgres`<br />
+`sudo -u postgres psql mbta`<br />
 `\password password`<br />
 `\q` (to quit)<br />
 `sudo -u postgres createdb mbta`<br />
 
-Accessing the interactive prompt (at least on an AWS EC2 instance) can be tricky. I used `psl postgres -h 127.0.0.1 -d mbta` to get around the the default behavior of using Unix sockets and instead use TCP/IP. Once you are in the interactive prompt, you can run your normal SQL commands (eg. "SELECT * FROM table WHERE...").
+Accessing the interactive prompt (at least on an AWS EC2 instance) can be tricky. I used `psl postgres -h 127.0.0.1 -d mbta` to get around the the default behavior of using Unix sockets and instead use TCP/IP. Once you are in the interactive prompt, you can run your normal SQL commands (eg. "SELECT * FROM table WHERE..."). Don't forget a `;` to terminate your commands!
 
-**6. Install and run the rabbitmq message-broker server**
+**6. Install and run the rabbitmq server**
 
 I used [this](http://monkeyhacks.com/post/installing-rabbitmq-on-ubuntu-14-04) tutorial to install RabbitMQ. Those steps (slightly modified here) are:
 
@@ -71,7 +71,7 @@ This is required for the pandas module to install correctly.
 
 Register for an account [here](http://realtime.mbta.com/Portal/Account/Register) and request an API key.
 
-Once you receive an API key, create an `api_key.py` in the folder mbta\_django/scraper/settings. It contains only one line: `API_KEY = <your\_api\_key\_here>`
+Once you receive an API key, create an `api_key.py` in the folder mbta\_django/scraper/settings. It contains only one line: `API_KEY = <your_api_key_here>`
 
 **9. Install all the remaining Python packages**
 
@@ -89,27 +89,29 @@ Note: make sure your virtual environment is active for this step.
 `python ./manage.py runserver 0.0.0.0:8000`<br />
 `python ./manage.py runserver 127.0.0.1:8000` (to run on localhost)<br />
 
-You should also `chmod u+x manage.py` so you don't have to type python in everytime.
+`gunicorn --bind 0.0.0.0:8000 mbta_django.wsgi:application`
+
+You should also `chmod u+x manage.py` so you don't have to type `python` in everytime.
 
 ### Software used
-* django
-* jinja2
-* postgres
-* nginx (to do)
-* gunicorn (to do)
-* memcached (to do)
-* flower (to do)
-* celery
-* rabbitmq
-* supervisord (to do on server)
-* bootstrap 3
-* jquery.js
-* plotly.js
+* **Web framework:** Django
+* **Templating language:** Jinja2
+* **Database:** Postgres
+* **Webserver:** nginx (to do)
+* **Application server:** Gunicorn (to do)
+* **Caching system:** Memcached (to do)
+* **Task monitor:** Flower (to do)
+* **Website analytics:** Google Analytics (to do)
+* **Task manager:** Celery
+* **Message broker:** RabbitMQ
+* **Process manager:** Supervisord (to do on server)
+* **CSS framework:** Bootstrap 3
+* **JS animations framework:** jquery.js
+* **JS plotting framework:** plotly.js
 
 ### To do
 
 **Critical**
-* pandas filtering for erroneous trips
 * pandas groupby only within 1 week timeframe.. "an average week"
 * after hours, return 0 for no ongoing trips (ie. don't use database for these results)
 
