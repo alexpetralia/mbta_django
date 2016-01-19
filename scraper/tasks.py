@@ -5,5 +5,4 @@ import mbta_trips
 def scrape_mbta():
 	mbta_trips.main()
 
-# Run on django-server start
 scrape_mbta.delay()

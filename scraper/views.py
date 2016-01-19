@@ -1,13 +1,12 @@
 from django.shortcuts import render
 from django.db.models import Avg, Sum
 
-from .models import TripCount, CompletedTrip
+from .models import TripCount, CompletedTrip, apiStatus
 from .settings.routes import ROUTES_DICT
 
 import pandas as pd
 import numpy as np
 
-# Create your views here.
 def index(request):
 
 	# Active trips for each route
@@ -19,11 +18,15 @@ def index(request):
 
 		# Get number of trips for first direction
 		num_trips_first_dir = TripCount.objects.filter(route__contains = route).order_by('-time').values('count').first()['count']
-
+	
 		# Get number of trips for second direction
 		num_trips_second_dir = TripCount.objects.filter(route__contains = route).exclude(direction__contains = direction).order_by('-time').values('count').first()['count']
 
-		trips[route] = num_trips_first_dir + num_trips_second_dir
+		# Check if the MBTA API is still alive (ie. returning a .json response)
+		status = apiStatus.objects.all().values().first()['status']
+
+		# If alive, return number of trips
+		trips[route] = num_trips_first_dir + num_trips_second_dir if status else 0
 
 	# Average number of trips for each route
 	num_trips = {}
@@ -58,7 +61,7 @@ def calc_mad(data):
 def get_avg_trip_times():
 
 	# Convert QuerySet to pd.DataFrame
-	queryset = CompletedTrip.objects.all().values('start_time', 'route', 'duration')[0:1000]
+	queryset = CompletedTrip.objects.all().values('start_time', 'route', 'duration')[0:100]
 	df = pd.DataFrame.from_records(queryset)
 
 	# Set dataframe index as datetime

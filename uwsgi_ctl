@@ -1,0 +1,20 @@
+#!/bin/bash
+
+MAIN_DIR=/home/alexpetralia/Projects/mbta_django
+SOCKFILE=run/uwsgi.sock 
+NUM_WORKERS=5
+WSGI_FILE=mbta_django/wsgi.py
+DJANGO_SETTINGS_MODULE=mbta_django.settings
+DJANGO_WSGI_MODULE=mbta_django.wsgi
+
+# Create the run directory if it doesn't exist
+RUNDIR=$(dirname $SOCKFILE)
+test -d $RUNDIR || mkdir -p $RUNDIR
+
+# Intialize Django uWSGI server
+exec uwsgi --chdir=${MAIN_DIR} \
+	--wsgi-file=${WSGI_FILE} \
+	--processes=${NUM_WORKERS} \
+	--socket ${SOCKFILE} \
+	--py-autoreload=3 \
+	# --http 127.0.0.1:8000

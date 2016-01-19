@@ -25,9 +25,9 @@ I would advise against using `python3-venv` because it will default to Python 3 
 
 `virtualenv venv` (uses the existing "venv" directory that you cloned)
 
-To activate your virtual environment, use `source venv/bin/activate`. I recommend creating an `alias` in your `~/.bashrc` so you don't have to type that command each time you need to activate your virtual environment.
+To activate your virtual environment, use `source venv/bin/activate` from your cloned mbta_django root folder. I recommend creating an `alias` in your `~/.bashrc` so you don't have to type that command each time you need to activate your virtual environment.
 
-If you run into permissions issues, do **not** use `sudo` to circumvent them. If you do, everything you do in the virtual environment will require `sudo` as well, which you don't want. Rather, change ownership of the "mbta_django" folder to your username: `sudo chown -R user:group venv`. Then, retry the command above.
+If you run into permissions issues, do **not** use `sudo` to circumvent them. If you do, everything you do in the virtual environment will require `sudo` as well, which you don't want. Rather, change ownership of the "mbta_django" folder to your username: `sudo chown -R user:group venv`. For example, I used `sudo chown -R alexpetralia:alexpetralia venv`. Then, retry the command above.
 
 **4. Install the postgres server**
 
@@ -35,7 +35,7 @@ If you run into permissions issues, do **not** use `sudo` to circumvent them. If
 
 **5. Configure postgres and create your database**
 
-For this django web application to work, django requires certain postgres settings. They are as follows:
+For this django web application to work, django requires certain postgres settings. They are:
 
 username: 'postgres'<br />
 password: 'password'<br />
@@ -43,12 +43,12 @@ database_name: 'mbta'<br />
 
 Run the following commands:
 
-`sudo -u postgres psql mbta`<br />
+`sudo -u postgres psql mbta` (to enter the interactive prompt)<br />
 `\password password`<br />
 `\q` (to quit)<br />
 `sudo -u postgres createdb mbta`<br />
 
-Accessing the interactive prompt (at least on an AWS EC2 instance) can be tricky. I used `psl postgres -h 127.0.0.1 -d mbta` to get around the the default behavior of using Unix sockets and instead use TCP/IP. Once you are in the interactive prompt, you can run your normal SQL commands (eg. "SELECT * FROM table WHERE..."). Don't forget a `;` to terminate your commands!
+If accessing the interactive prompt does not work for you, try using TCP/IP instead of Unix sockets. To do so, type `psl postgres -h 127.0.0.1 -d mbta` (where `mbta` is the name of your database) to get around the the default connecting behavior. Once you are in the interactive prompt, you can run your normal SQL commands (eg. `SELECT * FROM table WHERE...`). Don't forget a `;` to terminate your commands!
 
 **6. Install and run the rabbitmq server**
 
@@ -79,32 +79,115 @@ Once you receive an API key, create an `api_key.py` in the folder mbta\_django/s
 
 Note: make sure your virtual environment is active for this step.
 
+**10. Verify the celery daemon runs correctly**
+
+`(venv)>> celery -A mbta_django worker -l info`
+
+**11. Test that django runs on the development server**
+
+First, make `manage.py` executable by issuing `chmod u+x manage.py`. Then, in the repo's root folder, run in your virtual environment:
+
+`(venv)>> ./manage.py makemigrations` (to issue database commands) < br/>
+`(venv)>> ./manage.py migrate` (to commit database migrations) < br/>
+`(venv)>> ./manage.py runserver` (to run the server; use `runserver 0.0.0.0:8000` to make the app visible from other machines on the network) < br/>
+
+You should now see the mbta_django app running locally at `http://localhost:8000`.
+
+**12. Prepare django for production server**
+
+In a production environment, we'll use nginx (webserver) to serve static files and uWSGI (application server) to serve the django app. For nginx to easily find the static files in one location, django offers a command to conveniently put them in one. From your app root, type:
+
+`(venv)>> python ./manage.py collectstatic`
+
+This will copy all of your app's static files and any other files included under django's STATIC\_DIRS into the STATIC\_ROOT.
+
+**13. Install and configure nginx**
+
+`sudo apt-get install nginx`
+
+Once nginx is installed, you should find the default "Welcome" page at `http://localhost:80`, or more simply, `localhost`. Currently, nginx is showing the default webpage, whose settings are located in `/etc/nginx/nginx/sites-enabled`. You can `sudo rm -rf default` to remove this default file as it can mask errors.
+
+Next, we need to point nginx to mbta_django's `nginx.conf`. To do so, using your own path below, run:
+
+`cd /etc/nginx/nginx/sites-enabled`<br />
+`sudo ln -s /path/to/cloned/repo/mbta_django/supervisor.conf mbta_django.conf`
+
+Now, update `mbta_django/nginx.conf` (ie. the nginx.conf you cloned) to update the paths for your machine's paths:
+
+* Change `server unix:///home/alexpetralia/Projects/mbta_django/run/uwsgi.sock` to `server unix:///path/to/cloned/repo/mbta_django/run/uwsgi.sock`
+* Change `alias /home/alexpetralia/Projects/mbta_django/static` to `alias /path/to/cloned/repo/mbta_django/static`
+* Change `uwsgi_pass  unix:/home/alexpetralia/Projects/mbta_django/run/uwsgi.sock` to `uwsgi_pass  unix:/path/to/cloned/repo/mbta_django/run/uwsgi.sock`
+
+For now, nginx should show an error because it is trying to connect to the uWSGI socket that's not yet configured. We'll set that up next.
+
+If you are having errors with nginx (eg. 503 Bad Gateway), check the log via `tail -5 /var/log/nginx/error.log`. You can restart the server using `sudo service nginx restart`. If you run into permissions issues, verify again that your cloned repo uses `chmod -R 755 <dirname>` permissions. Also, the owner of the app folder should be the same as the user running nginx (under `mbta_django/nginx.conf`) and supervisor (under `mbta_django/supervisor.conf`).
+
+**14. Configure uWSGI**
+
+uWSGI requires a specific set of parameters to start properly, so this is often done using shell start script. In the cloned repo, this file is `uwsgi_ctl`. Ensure that this file is an executable using `chmod u+x uwsgi_ctl`.
+
+Within `uwsgi_ctl`, we need to update the path for your specific machine. Change `MAIN_DIR=/home/alexpetralia/Projects/mbta_django` to `MAIN_DIR=/path/to/cloned/repo`
+
+We want to test if this `uwsgi_ctl` file runs correctly. Currently, it's configured to issue a socket file `run/uwsgi.sock` that nginx can connect to. To have it run over HTTP, uncomment `--http 127.0.0.1:8000` and comment out `--socket ${SOCKFILE}`. Then in your virtual environment, test if the uWSGI server will run.
+
+`(venv)>> ./uswgi_ctl`
+
+Once you're done, we can test if uWSGI works with nginx. Recomment the `--http` line and uncomment out the ``--socket`` line. 
+
+Run ``./uwsgi_ctl`` again and navigate to `localhost` (your nginx server should be running in the background by default; it will now see the uWSGI socket). **Your entire web app should now load correctly.** If there are errors, remember to investigate in your app root's `logs/mbta_uwsgi.log`.
+
+**15. Configure supervisor**
+
+The webapp fundamentally runs on two processes: (1) the django application running via UWSGI and (2) the celery background worker that scrapes data from the MBTA Developer's API. Supervisor watches these processes and restarts them if there any failures - essentially it is a safety net for your processes in a production environment.
+
+The supervisor configuration is located in your app root's `/mbta_django/supervisor.conf`. There are *nine* (9) absolute paths here which need to be changed for your specific setup. There is also the `user` field. You must change this to your username (critical, otherwise supervisor will not have the correct permissions to access `mbta_django/uwsgi.sock`).
+
+Finally, supervisor needs to know where to find this configuration file. To do so, run:
+
+`cd /etc/supervisor/conf.d`<br />
+`sudo ln -s /path/to/cloned/repo/mbta_django/supervisor.conf mbta_django.conf`
+
+Restart supervisor: `sudo service supervisor restart`.
+
+Now, if your server reboots or your processes die, supervisor should start on boot and automatically restart dead processes.
+
 ### Usage
 
+###### To start supervisor processes, type:
+`sudo supervisorctl restart all`
+
+### Debugging individual processes
+
 ###### To start the celery worker, type:
-`celery -A mbta_django worker -l info`<br />
-`nohup celery -A mbta_django worker -l info &` (run in background)<br />
+`(venv)>> celery -A mbta_django worker -l info`<br />
+`(venv)>> nohup celery -A mbta_django worker -l info &` (to run in background)<br />
 
-###### To start the django server (available from all IPs, as opposed to just localhost), type:
-`python ./manage.py runserver 0.0.0.0:8000`<br />
-`python ./manage.py runserver 127.0.0.1:8000` (to run on localhost)<br />
+###### To start the django development server, type:
+`(venv)>> ./manage.py runserver 127.0.0.1:8000`
 
-`gunicorn --bind 0.0.0.0:8000 mbta_django.wsgi:application`
+###### To start the uWSGI application server, type:
+`(venv)>> ./uwsgi_ctl`
+Note: ensure that `uwsgi_ctl` is configured to use `--http` and not `--socket`.
 
-You should also `chmod u+x manage.py` so you don't have to type `python` in everytime.
+###### To restart the nginx webserver, type:
+`sudo service nginx restart`
+
+###### To restart supervisor, type:
+`sudo service supervisor restart`
 
 ### Software used
 * **Web framework:** Django
 * **Templating language:** Jinja2
 * **Database:** Postgres
 * **Webserver:** nginx (to do)
-* **Application server:** Gunicorn (to do)
+* **Application server:** uWSGI (to do)
 * **Caching system:** Memcached (to do)
 * **Task monitor:** Flower (to do)
 * **Website analytics:** Google Analytics (to do)
 * **Task manager:** Celery
 * **Message broker:** RabbitMQ
-* **Process manager:** Supervisord (to do on server)
+* **Messaging library**: Kombu
+* **Process manager:** Supervisor (to do on server)
 * **CSS framework:** Bootstrap 3
 * **JS animations framework:** jquery.js
 * **JS plotting framework:** plotly.js
@@ -112,14 +195,19 @@ You should also `chmod u+x manage.py` so you don't have to type `python` in ever
 ### To do
 
 **Critical**
+* set up server: supervisor, uwsgi, nginx, associate fqdn
 * pandas groupby only within 1 week timeframe.. "an average week"
-* after hours, return 0 for no ongoing trips (ie. don't use database for these results)
+* memcached for redundant queries (https://docs.djangoproject.com/en/1.9/topics/cache/#memcached)
+* slow performance profiling
+* webapp load testing
 
 **Follow-up**
-* set up on server (supervisor, gunicorn, nginx, associate fqdn)
+* fix responsiveness
+* fix shifting navbar
 * jquery only 1 plot at a time
 * Ajax refreshes every 10 seconds
-* memcached for redundant queries
+* debug = False	
+* apiStatus should be using a message queue Publisher/Subscriber model (Kombu) or websockets instead of postgres
 
 ### License
 

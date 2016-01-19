@@ -5,13 +5,14 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 os.chdir(BASE_DIR)
 
 from datetime import timedelta, datetime as dt
+# from django.conf import settings as django_settings
 import requests
 import time
 import logging
 
 from .settings.api_key import API_KEY
 from .settings.routes import ROUTES
-from .models import CompletedTrip, TripCount
+from .models import CompletedTrip, TripCount, apiStatus
 
 WAIT_TIME_SEC = 10
 
@@ -157,7 +158,7 @@ class Direction():
             route = self.route_name,
             )
 
-        # If the current amount of trips differs from the last saved value in the database, update the database
+        # If the current amount of trips differs from the last saved value in the database, insert new value into the database
         try: # pull the most recent trip count for this direction/route
             all_trips = TripCount.objects.filter(direction = self.direction_name, route = self.route_name).order_by('-time')
             last_count = all_trips.values()[0]['count'] 
@@ -340,7 +341,7 @@ def main():
     BASE_URL = 'http://realtime.mbta.com/developer/api/v2/' \
                'vehiclesbyroutes?api_key=%s&routes=%s&format=json' % (API_KEY, ROUTES)
     
-    # Ignore all trips at runtime because start time cannot be determined
+    # Ignore all trips existing at runtime because their start times cannot be determined
     ignored_trips = ignore_trips( requests.get(BASE_URL).json() )
 
     Routes = {}
@@ -348,12 +349,13 @@ def main():
         
         response = get_json(BASE_URL)
         
-        try:
-            modes = response['mode']
-        except KeyError as e:
+        modes = response.get('mode')
+        if not modes:
             logger.debug(e)
+            apiStatus.objects.update_or_create(id = 1, defaults = {'status': 0})
             time.sleep(300)
             continue
+        apiStatus.objects.update_or_create(id = 1, defaults = {'status': 1})
             
         for mode in modes:
             for route in mode['route']:

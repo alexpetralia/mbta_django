@@ -16,9 +16,10 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from .views import about
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('scraper.urls')), # if $ is added at end (within root URLconf), no child app URLs can be appended
-    url(r'^about/$', 'mbta_django.views.about', name='about'),
+    url(r'^about/$', about, name='about'),
 ]

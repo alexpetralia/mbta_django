@@ -3,7 +3,6 @@ import datetime
 
 class CompletedTrip(models.Model):
 
-
 	trip_id = models.CharField(max_length=200)
 	vehicle_id = models.CharField(max_length=200)
 	direction = models.CharField(max_length=200)
@@ -26,3 +25,10 @@ class TripCount(models.Model):
 
 	def __str__(self):
 		return "%s (%s): %s" % (self.route, self.direction, self.count)
+
+class apiStatus(models.Model):
+
+	status = models.IntegerField(default = 0)
+
+	def __str__(self):
+		return "Current status: %s" % self.status

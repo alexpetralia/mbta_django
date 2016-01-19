@@ -80,30 +80,13 @@ TEMPLATES = [
                 "enabled": False,
             },
             "autoescape": True,
-            # "environment": "mbta_django.jinja2.environment",
         },
 
     },
-    # {
-    #     'BACKEND': 'django.template.backends.django.DjangoTemplates',
-    #     'DIRS': [],
-    #     'APP_DIRS': True,
-    #     'OPTIONS': {
-    #         'context_processors': [
-    #             'django.template.context_processors.debug',
-    #             'django.template.context_processors.request',
-    #             'django.contrib.auth.context_processors.auth',
-    #             'django.contrib.messages.context_processors.messages',
-    #         ],
-    #     },
-    # },
 ]
 
 WSGI_APPLICATION = 'mbta_django.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -149,15 +132,16 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.9/howto/static-files/
-
+# By default, django looks inside your apps for `static` folders. However, if you keep them outside of your apps, specify other locations for static files here. It will then copy these files into the STATIC_ROOT.
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "common"),
 ]
 
+# The special url to ignore in urls.py
 STATIC_URL = '/static/'
+
+# This is where `./manage.py collectstatic` will serve your static files from in deployment
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # CELERY SETTINGS
 BROKER_URL = 'amqp://guest:guest@localhost:5672//'
