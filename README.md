@@ -1,5 +1,7 @@
 # MBTA Trips
 
+**[You can view this project live here](http://bostonmbta.info/)**
+
 MBTA Trips is a django-powered web application which displays, for each MBTA route in Boston, the number of currently active MBTA trips and the average trip duration over a typical week. Every 10 seconds, a `celery` background worker scrapes .json data from the [MBTA Developer Portal](http://realtime.mbta.com/portal) containing information on all ongoing trips. The time at which new trips (*see footnote 1*) appear is saved, as well as when they disappear - the difference yields the trip's duration. Each completed trip is saved in a postgres database.
 
 The primary motivation for this project was to visualize when certain routes are busiest throughout a typical week. Additionally, this project was designed around using as many new technologies as possible as a learning experience.
@@ -217,9 +219,8 @@ Note: ensure that `uwsgi_ctl` is configured to use `--http` and not `--socket`.
 ### To do
 
 **Critical**
-* set up server: associate fqdn
-* pandas groupby only within 1 week timeframe.. "an average week"
 * memcached for redundant queries (https://docs.djangoproject.com/en/1.9/topics/cache/#memcached)
+* pandas groupby only within 1 week timeframe.. "an average week"
 * slow performance profiling
 * webapp load testing
 
@@ -228,7 +229,6 @@ Note: ensure that `uwsgi_ctl` is configured to use `--http` and not `--socket`.
 * fix shifting navbar
 * jquery only 1 plot at a time
 * Ajax refreshes every 10 seconds
-* debug = False	
 * apiStatus should be using a message queue Publisher/Subscriber model (Kombu) or websockets instead of postgres
 
 ### License
