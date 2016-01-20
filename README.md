@@ -151,10 +151,12 @@ Finally, supervisor needs to know where to find this configuration file. To do s
 
 Restart supervisor: `sudo service supervisor restart`. If you would like to control your supervisor from the browser, add this to `/etc/supervisor/supervisor.conf` and restart the process:
 
-```[inet_http_server]
+```
+[inet_http_server]
 port = 9001
 username = username
-password = password```
+password = password
+```
 
 Now, if your server reboots or your processes die, supervisor should start on boot and automatically restart dead processes.
 
