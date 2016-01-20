@@ -61,7 +61,7 @@ def calc_mad(data):
 def get_avg_trip_times():
 
 	# Convert QuerySet to pd.DataFrame
-	queryset = CompletedTrip.objects.all().values('start_time', 'route', 'duration')[0:100]
+	queryset = CompletedTrip.objects.all().values('start_time', 'route', 'duration')[0:600]
 	df = pd.DataFrame.from_records(queryset)
 
 	# Set dataframe index as datetime

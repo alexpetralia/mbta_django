@@ -21,7 +21,7 @@ Within your projects folder that will house the mbta\_django repo, enter:
 
 **3. Create a new virtual environment**
 
-I would advise against using `python3-venv` because it will default to Python 3 for package installation. This is problematic when installing `supervisord`, which requires Pyhon 2. I also advise against Anaconda's virtual environment manager with this specific project. Within the "mbta_django folder", run:
+I would advise against using `python3-venv` because it will default to Python 3 for package installation. This is problematic when installing `supervisor`, which requires Pyhon 2. I also advise against Anaconda's virtual environment manager with this specific project. Within the "mbta_django folder", run:
 
 `virtualenv venv` (uses the existing "venv" directory that you cloned)
 
