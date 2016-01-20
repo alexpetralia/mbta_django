@@ -9,7 +9,7 @@ The primary motivation for this project was to visualize when certain routes are
 While I don't anticipate anyone thoroughly replicating this installation, outlining the general steps could prove useful for those with a similar stack.
 Ensure your default Python environment uses Python 2, not Python 3. You can check this by running `python` in your terminal to see which version you are using.
 
-**1. Ensure your Ubuntu distrubtion is up-to-date**
+**1. Ensure your Ubuntu distribution is up-to-date**
 
 `sudo apt-get update && sudo apt-get dist-upgrate`
 
@@ -87,9 +87,9 @@ Note: make sure your virtual environment is active for this step.
 
 First, make `manage.py` executable by issuing `chmod u+x manage.py`. Then, in the repo's root folder, run in your virtual environment:
 
-`(venv)>> ./manage.py makemigrations` (to issue database commands) < br/>
-`(venv)>> ./manage.py migrate` (to commit database migrations) < br/>
-`(venv)>> ./manage.py runserver` (to run the server; use `runserver 0.0.0.0:8000` to make the app visible from other machines on the network) < br/>
+`(venv)>> ./manage.py makemigrations` (to issue database commands) <br />
+`(venv)>> ./manage.py migrate` (to commit database migrations) <br />
+`(venv)>> ./manage.py runserver` (to run the server; use `runserver 0.0.0.0:8000` to make the app visible from other machines on the network) <br />
 
 You should now see the mbta_django app running locally at `http://localhost:8000`.
 
@@ -110,7 +110,7 @@ Once nginx is installed, you should find the default "Welcome" page at `http://l
 Next, we need to point nginx to mbta_django's `nginx.conf`. To do so, using your own path below, run:
 
 `cd /etc/nginx/nginx/sites-enabled`<br />
-`sudo ln -s /path/to/cloned/repo/mbta_django/supervisor.conf mbta_django.conf`
+`sudo ln -s /path/to/cloned/repo/mbta_django/nginx.conf mbta_django.conf`
 
 Now, update `mbta_django/nginx.conf` (ie. the nginx.conf you cloned) to update the paths for your machine's paths:
 
@@ -118,9 +118,11 @@ Now, update `mbta_django/nginx.conf` (ie. the nginx.conf you cloned) to update t
 * Change `alias /home/alexpetralia/Projects/mbta_django/static` to `alias /path/to/cloned/repo/mbta_django/static`
 * Change `uwsgi_pass  unix:/home/alexpetralia/Projects/mbta_django/run/uwsgi.sock` to `uwsgi_pass  unix:/path/to/cloned/repo/mbta_django/run/uwsgi.sock`
 
+Finally, edit to `/etc/nginx/nginx.conf`. Nginx needs to be run with the same user as uWSGI, so change the `user` field from `www-data` to your username. If you forget to do this, you will see a permissions issue in the error logs when connecting to the Unix socket.
+
 For now, nginx should show an error because it is trying to connect to the uWSGI socket that's not yet configured. We'll set that up next.
 
-If you are having errors with nginx (eg. 503 Bad Gateway), check the log via `tail -5 /var/log/nginx/error.log`. You can restart the server using `sudo service nginx restart`. If you run into permissions issues, verify again that your cloned repo uses `chmod -R 755 <dirname>` permissions. Also, the owner of the app folder should be the same as the user running nginx (under `mbta_django/nginx.conf`) and supervisor (under `mbta_django/supervisor.conf`).
+If you are having errors with nginx (eg. 503 Bad Gateway), check the log via `tail -5 /var/log/nginx/error.log`. You can restart the server using `sudo service nginx restart`. If you run into permissions issues, verify again that your cloned repo uses `chmod -R 755 <dirname>` permissions.
 
 **14. Configure uWSGI**
 
@@ -147,14 +149,32 @@ Finally, supervisor needs to know where to find this configuration file. To do s
 `cd /etc/supervisor/conf.d`<br />
 `sudo ln -s /path/to/cloned/repo/mbta_django/supervisor.conf mbta_django.conf`
 
-Restart supervisor: `sudo service supervisor restart`.
+Restart supervisor: `sudo service supervisor restart`. If you would like to control your supervisor from the browser, add this to `/etc/supervisor/supervisor.conf` and restart the process:
+
+```[inet_http_server]
+port = 9001
+username = username
+password = password```
 
 Now, if your server reboots or your processes die, supervisor should start on boot and automatically restart dead processes.
+
+**16. Protect settings for future git cloning**
+
+If you need to update your repo to the most recent version, you'll run `git pull`.
+
+However, because you updated a couple of files with your specific machine's settings (ie. the absolute pathnames), you'll want git to ignore those and keep your version of those files. Therefore, before running `git pull`, first run:
+
+`git stash` in **both** "mbta_django/mbta_django" as well as the app root "mbta_django" (these are the two locations you updated files).
+
+Then run `git pull`. Finally, to revert to your pre-updated config settings, go back to both folders and enter `git stash pop`.
 
 ### Usage
 
 ###### To start supervisor processes, type:
 `sudo supervisorctl restart all`
+
+###### To check the status of your supervisor processes, type:
+`sudo supervisorctl status`
 
 ### Debugging individual processes
 
@@ -179,15 +199,15 @@ Note: ensure that `uwsgi_ctl` is configured to use `--http` and not `--socket`.
 * **Web framework:** Django
 * **Templating language:** Jinja2
 * **Database:** Postgres
-* **Webserver:** nginx (to do)
-* **Application server:** uWSGI (to do)
+* **Webserver:** nginx
+* **Application server:** uWSGI
 * **Caching system:** Memcached (to do)
 * **Task monitor:** Flower (to do)
-* **Website analytics:** Google Analytics (to do)
+* **Website analytics:** Google Analytics
 * **Task manager:** Celery
 * **Message broker:** RabbitMQ
 * **Messaging library**: Kombu
-* **Process manager:** Supervisor (to do on server)
+* **Process manager:** Supervisor
 * **CSS framework:** Bootstrap 3
 * **JS animations framework:** jquery.js
 * **JS plotting framework:** plotly.js
@@ -195,7 +215,7 @@ Note: ensure that `uwsgi_ctl` is configured to use `--http` and not `--socket`.
 ### To do
 
 **Critical**
-* set up server: supervisor, uwsgi, nginx, associate fqdn
+* set up server: associate fqdn
 * pandas groupby only within 1 week timeframe.. "an average week"
 * memcached for redundant queries (https://docs.djangoproject.com/en/1.9/topics/cache/#memcached)
 * slow performance profiling
