@@ -1,6 +1,6 @@
 # MBTA Trips
 
-**[You can view this project live here](http://bostonmbta.info/)**
+**<a href="http://bostonmbta.info/" target="_blank">You can view this project live here.</a>**
 
 MBTA Trips is a django-powered web application which displays, for each MBTA route in Boston, the number of currently active MBTA trips and the average trip duration over a typical week. Every 10 seconds, a `celery` background worker scrapes .json data from the [MBTA Developer Portal](http://realtime.mbta.com/portal) containing information on all ongoing trips. The time at which new trips (*see footnote 1*) appear is saved, as well as when they disappear - the difference yields the trip's duration. Each completed trip is saved in a postgres database.
 
@@ -13,7 +13,7 @@ Ensure your default Python environment uses Python 2, not Python 3. You can chec
 
 **1. Ensure your Ubuntu distribution is up-to-date**
 
-`sudo apt-get update && sudo apt-get dist-upgrate`
+`sudo apt-get update && sudo apt-get dist-upgrade`
 
 **2. Clone the repository**
 
@@ -37,7 +37,7 @@ If you run into permissions issues, do **not** use `sudo` to circumvent them. If
 
 **5. Configure postgres and create your database**
 
-For this django web application to work, django requires certain postgres settings. They are:
+For this django webapp to work, django requires certain postgres settings. They are:
 
 username: 'postgres'<br />
 password: 'password'<br />
@@ -52,7 +52,7 @@ Run the following commands:
 
 If accessing the interactive prompt does not work for you, try using TCP/IP instead of Unix sockets. To do so, type `psl postgres -h 127.0.0.1 -d mbta` (where `mbta` is the name of your database) to get around the the default connecting behavior. Once you are in the interactive prompt, you can run your normal SQL commands (eg. `SELECT * FROM table WHERE...`). Don't forget a `;` to terminate your commands!
 
-**6. Install and run the rabbitmq server**
+**6. Install and run the RabbitMQ server**
 
 I used [this](http://monkeyhacks.com/post/installing-rabbitmq-on-ubuntu-14-04) tutorial to install RabbitMQ. Those steps (slightly modified here) are:
 
@@ -126,7 +126,11 @@ For now, nginx should show an error because it is trying to connect to the uWSGI
 
 If you are having errors with nginx (eg. 503 Bad Gateway), check the log via `tail -5 /var/log/nginx/error.log`. You can restart the server using `sudo service nginx restart`. If you run into permissions issues, verify again that your cloned repo uses `chmod -R 755 <dirname>` permissions.
 
-**14. Configure uWSGI**
+**14. Install memcached**
+
+`sudo apt-get install memcached`
+
+**15. Configure uWSGI**
 
 uWSGI requires a specific set of parameters to start properly, so this is often done using shell start script. In the cloned repo, this file is `uwsgi_ctl`. Ensure that this file is an executable using `chmod u+x uwsgi_ctl`.
 
@@ -140,7 +144,9 @@ Once you're done, we can test if uWSGI works with nginx. Recomment the `--http` 
 
 Run ``./uwsgi_ctl`` again and navigate to `localhost` (your nginx server should be running in the background by default; it will now see the uWSGI socket). **Your entire web app should now load correctly.** If there are errors, remember to investigate in your app root's `logs/mbta_uwsgi.log`.
 
-**15. Configure supervisor**
+**16. Install and configure supervisor**
+
+Run `sudo apt-get install supervisor`.
 
 The webapp fundamentally runs on two processes: (1) the django application running via UWSGI and (2) the celery background worker that scrapes data from the MBTA Developer's API. Supervisor watches these processes and restarts them if there any failures - essentially it is a safety net for your processes in a production environment.
 
@@ -162,7 +168,7 @@ password = password
 
 Now, if your server reboots or your processes die, supervisor should start on boot and automatically restart dead processes.
 
-**16. Protect settings for future git cloning**
+**17. Protect settings for future git cloning**
 
 If you need to update your repo to the most recent version, you'll run `git pull`.
 
@@ -199,13 +205,13 @@ Note: ensure that `uwsgi_ctl` is configured to use `--http` and not `--socket`.
 ###### To restart supervisor, type:
 `sudo service supervisor restart`
 
-### Software used
+### Software stack
 * **Web framework:** Django
 * **Templating language:** Jinja2
 * **Database:** Postgres
 * **Webserver:** nginx
 * **Application server:** uWSGI
-* **Caching system:** Memcached (to do)
+* **Caching system:** Memcached
 * **Task monitor:** Flower (to do)
 * **Website analytics:** Google Analytics
 * **Task manager:** Celery
@@ -213,23 +219,23 @@ Note: ensure that `uwsgi_ctl` is configured to use `--http` and not `--socket`.
 * **Messaging library**: Kombu
 * **Process manager:** Supervisor
 * **CSS framework:** Bootstrap 3
-* **JS animations framework:** jquery.js
+* **JS animations/AJAX framework:** jquery.js
 * **JS plotting framework:** plotly.js
 
 ### To do
 
 **Critical**
-* memcached for redundant queries (https://docs.djangoproject.com/en/1.9/topics/cache/#memcached)
+* optimize SQL queries
+* add Ajax calls every 10s
+* fix responsiveness for mobile
 * pandas groupby only within 1 week timeframe.. "an average week"
-* slow performance profiling
-* webapp load testing
+* fix shifting navbar.. it has to do with navbar css
 
 **Follow-up**
-* fix responsiveness
-* fix shifting navbar
 * jquery only 1 plot at a time
-* Ajax refreshes every 10 seconds
-* apiStatus should be using a message queue Publisher/Subscriber model (Kombu) or websockets instead of postgres
+* load testing
+* apiStatus should be using a message queue Publisher/Subscriber model (Kombu) or Unix socket instead of postgres
+* add more routes?
 
 ### License
 

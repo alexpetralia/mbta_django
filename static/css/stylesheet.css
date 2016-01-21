@@ -1,5 +1,27 @@
 body {
 	background-color: rgba(170, 170, 242, 0);
-   	transform: scale(.75);
+   	transform: scale(.72);
    	transform-origin: 50% -5%;
+}
+
+@media (max-width: 1240px) {
+	.wrapper { 
+  		width: 1024px !important; 
+  		margin: 0px auto;
+  	}
+}
+
+@media (max-width: 940px) {
+	.wrapper { 
+  		width: 1024px !important; 
+  		margin: 0px auto;
+  	}
+}
+
+h1 {
+	text-align: center;
+}
+
+.spacer {
+	margin-top: 40px;
 }

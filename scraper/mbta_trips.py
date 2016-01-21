@@ -351,7 +351,6 @@ def main():
         
         modes = response.get('mode')
         if not modes:
-            logger.debug(e)
             apiStatus.objects.update_or_create(id = 1, defaults = {'status': 0})
             time.sleep(300)
             continue

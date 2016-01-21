@@ -1,0 +1,23 @@
+{% extends 'base.jinja' %}
+
+{% block content %}
+
+<h1><strong>About this project</strong></h1>
+
+<div class='container-fluid'>
+
+	<br />
+
+	<center><img src="{{ static('images/t-logo.png') }}"></center>
+
+	<div class="spacer"></div>
+
+	<p>MBTA Trips is a Python-powered web application which displays, for each MBTA route in Boston, the number of currently active MBTA trips and the average trip duration over a typical week. Ideally, these can be used as proxies for when the subway system is busiest. I was always curious about "how many cars are actually running", so I decided to build this app to answer that question.</p>
+
+	<div class="spacer"></div>
+
+	<p>You can find out more about the author <strong><a href="http://alexpetralia.com/" target="_blank">here</a></strong>.</p>
+
+</div>
+
+{% endblock %}

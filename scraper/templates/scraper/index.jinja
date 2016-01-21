@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base.jinja' %}
 
 {% block content %}
 
@@ -141,7 +141,7 @@
 
 // PLOTLY.JS
 
-{% for key, value in avg_trip_times.items() %}
+{% for key, value in avg_trip_times.iteritems() %}
 var data = [
   {
     x: {{ value['x']|safe }},

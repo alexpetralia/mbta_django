@@ -1,13 +1,17 @@
-h1 {
-	text-align: center;
+h3 {
+	margin-top: 10%;
 }
 
-h3 {
-	margin-top: 15%;
+p {
+	font-size: 1.5em;
 }
 
 .first.row {
 	text-align: center;
+}
+
+.row {
+	line-height: 25px;
 }
 
 .thirds {
@@ -21,16 +25,9 @@ h3 {
 	cursor: pointer;
 }
 
-.spacer {
-	margin-top: 40px;
-}
-
-.wrapper {
-	width: 1080px !important;
-	margin: 0px auto;
-}
-
 .big {
+	display: block;
+	margin: 10% 0;
 	font-weight: bold;
 	font-size: 4em;
 }
@@ -65,4 +62,9 @@ h3 {
 .silver {
 	background-color: rgba(80, 80, 80, .3);
 	border: 5px solid rgba(80, 80, 80, .1);
+}
+
+.plotly {
+	display: block;
+	margin: 0px auto;
 }

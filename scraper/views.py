@@ -1,13 +1,18 @@
 from django.shortcuts import render
 from django.db.models import Avg, Sum
+from django.core.cache import cache
 
 from .models import TripCount, CompletedTrip, apiStatus
 from .settings.routes import ROUTES_DICT
 
 import pandas as pd
 import numpy as np
+from datetime import datetime as dt
 
 def index(request):
+
+	# Check if the MBTA API is still alive (ie. returning a .json response)
+	status = apiStatus.objects.all().values().first()['status']
 
 	# Active trips for each route
 	trips = {}
@@ -21,9 +26,6 @@ def index(request):
 	
 		# Get number of trips for second direction
 		num_trips_second_dir = TripCount.objects.filter(route__contains = route).exclude(direction__contains = direction).order_by('-time').values('count').first()['count']
-
-		# Check if the MBTA API is still alive (ie. returning a .json response)
-		status = apiStatus.objects.all().values().first()['status']
 
 		# If alive, return number of trips
 		trips[route] = num_trips_first_dir + num_trips_second_dir if status else 0
@@ -43,7 +45,7 @@ def index(request):
 	filter = ('Red Line', 'Blue Line', 'Orange Line', 'Green Line B', 'Green Line C', 'Green Line D', 'Green Line E', 'Silver Line SL1', 'Silver Line SL2', 'Silver Line SL4', 'Silver Line SL5',) # can only pass routes into the dict that have associated plotly charts. if a route is passed without one, no plotly chart will display
 	avg_trip_times = {k:v for k, v in avg_trip_times_all.items() if k in filter}
 
-	return render(request, "scraper/index.html", locals())
+	return render(request, "scraper/index.jinja", locals())
 
 def get_direction(route):
 
@@ -61,7 +63,7 @@ def calc_mad(data):
 def get_avg_trip_times():
 
 	# Convert QuerySet to pd.DataFrame
-	queryset = CompletedTrip.objects.all().values('start_time', 'route', 'duration')[0:600]
+	queryset = CompletedTrip.objects.all().values('start_time', 'route', 'duration')
 	df = pd.DataFrame.from_records(queryset)
 
 	# Set dataframe index as datetime
@@ -69,6 +71,13 @@ def get_avg_trip_times():
 
 	# Get unique routes as returned by QuerySet
 	routes = df['route'].unique()
+
+	# Before expensive calculation, check if it was already computed today and stored in Memcached
+	today = str(dt.now().date())
+	timeout = 60*60*12
+	cached_json = cache.get(today)
+	if cached_json is not None:
+		return cached_json
 
 	json = {}
 	for route in routes:
@@ -103,4 +112,5 @@ def get_avg_trip_times():
 		# Append to dictionary
 		json[route] = {'x': x_values, 'y': y_values}
 
+	cache.set(today, json, timeout)
 	return json
