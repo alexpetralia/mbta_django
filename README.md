@@ -174,7 +174,7 @@ If you need to update your repo to the most recent version, you'll run `git pull
 
 However, because you updated a couple of files with your specific machine's settings (ie. the absolute pathnames), you'll want git to ignore those and keep your version of those files. Therefore, before running `git pull`, first run:
 
-`git stash` in **both** "mbta_django/mbta_django" as well as the app root "mbta_django" (these are the two locations you updated files).
+`git stash` in  "mbta_django/mbta_django" (ie. where your `settings.py` is located)
 
 Then run `git pull`. Finally, to revert to your pre-updated config settings, go back to both folders and enter `git stash pop`.
 
@@ -225,17 +225,15 @@ Note: ensure that `uwsgi_ctl` is configured to use `--http` and not `--socket`.
 ### To do
 
 **Critical**
-* optimize SQL queries
-* add Ajax calls every 10s
 * fix responsiveness for mobile
-* pandas groupby only within 1 week timeframe.. "an average week"
-* fix shifting navbar.. it has to do with navbar css
+* add Ajax calls every 10s
+* fix shifting navbar (it has to do with navbar css)
+* load testing
 
 **Follow-up**
-* jquery only 1 plot at a time
-* load testing
 * apiStatus should be using a message queue Publisher/Subscriber model (Kombu) or Unix socket instead of postgres
-* add more routes?
+* add more routes (?)
+* jquery only 1 plot at a time (?)
 
 ### License
 

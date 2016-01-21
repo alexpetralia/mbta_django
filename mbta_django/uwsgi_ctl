@@ -11,10 +11,10 @@ DJANGO_WSGI_MODULE=mbta_django.wsgi
 RUNDIR=$(dirname $SOCKFILE)
 test -d $RUNDIR || mkdir -p $RUNDIR
 
-# Intialize Django uWSGI server
+# Intialize uWSGI server
 exec uwsgi --chdir=${MAIN_DIR} \
+	--py-autoreload=3 \
 	--wsgi-file=${WSGI_FILE} \
 	--processes=${NUM_WORKERS} \
 	--socket ${SOCKFILE} \
-	--py-autoreload=3 \
 	# --http 127.0.0.1:8000

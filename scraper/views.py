@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.db.models import Avg, Sum
 from django.core.cache import cache
+from django.conf import settings
 
 from .models import TripCount, CompletedTrip, apiStatus
 from .settings.routes import ROUTES_DICT
@@ -14,7 +15,21 @@ def index(request):
 	# Check if the MBTA API is still alive (ie. returning a .json response)
 	status = apiStatus.objects.all().values().first()['status']
 
-	# Active trips for each route
+	###############################
+	# Active trips for each route #
+	###############################
+
+	# [THIS SQL IS ACTUALLY SLOWER THAN MULTIPLE QUERIES]
+	# from django.db import connection
+	# sql = ("SELECT route, SUM(count) as count FROM ( "
+	# 			"SELECT DISTINCT ON (direction, route) route, count "
+	# 			"FROM scraper_tripcount "
+	# 			"ORDER BY route, direction, time DESC ) as t1 "
+	# 		"GROUP BY route")
+	# cursor = connection.cursor()
+	# cursor.execute(sql)
+	# trips = { str(k):int(v) if status else 0 for k, v in cursor.fetchall() }
+
 	trips = {}
 	for route in ROUTES_DICT:
 
@@ -30,20 +45,33 @@ def index(request):
 		# If alive, return number of trips
 		trips[route] = num_trips_first_dir + num_trips_second_dir if status else 0
 
-	# Average number of trips for each route
-	num_trips = {}
-	for route in ROUTES_DICT:
+	##########################################
+	# Average number of trips for each route #
+	##########################################
 
-		avg_num_trips_query = TripCount.objects.filter(route__contains = route).values('direction').annotate(avg_num_trips = Avg('count'))
-		avg_num_trips = avg_num_trips_query.aggregate(Sum('avg_num_trips'))['avg_num_trips__sum']
-		avg_num_trips_rounded = "{:10.2f}".format(avg_num_trips)
+	today = str(dt.now().date()) + "-avg_num_trips"
+	avg_num_trips = cache.get(today)
+	
+	if avg_num_trips is None:
+		avg_num_trips = {}
+		for route in ROUTES_DICT:
+			avg_num_trips_query = TripCount.objects.filter(route__contains = route).values('direction').annotate(avg_num_trips = Avg('count'))
+			avg_num_trips_sum = avg_num_trips_query.aggregate(Sum('avg_num_trips'))['avg_num_trips__sum']
+			avg_num_trips_rounded = "{:10.2f}".format(avg_num_trips_sum)
+			avg_num_trips[route] = avg_num_trips_rounded.strip()
+		cache.set(today, avg_num_trips, settings.TIMEOUT)
 
-		num_trips[route] = avg_num_trips_rounded.strip()
+	######################
+	# Average trip times #
+	######################
 
-	# Average trip times
 	avg_trip_times_all = get_avg_trip_times()
 	filter = ('Red Line', 'Blue Line', 'Orange Line', 'Green Line B', 'Green Line C', 'Green Line D', 'Green Line E', 'Silver Line SL1', 'Silver Line SL2', 'Silver Line SL4', 'Silver Line SL5',) # can only pass routes into the dict that have associated plotly charts. if a route is passed without one, no plotly chart will display
 	avg_trip_times = {k:v for k, v in avg_trip_times_all.items() if k in filter}
+
+	##########
+	# Return #
+	##########
 
 	return render(request, "scraper/index.jinja", locals())
 
@@ -74,7 +102,6 @@ def get_avg_trip_times():
 
 	# Before expensive calculation, check if it was already computed today and stored in Memcached
 	today = str(dt.now().date())
-	timeout = 60*60*12
 	cached_json = cache.get(today)
 	if cached_json is not None:
 		return cached_json
@@ -94,23 +121,22 @@ def get_avg_trip_times():
 		lowerLim, upperLim = med - 3 * buffer_mins, med + 10 * buffer_mins
 		route_df = route_df[(route_df['duration'] > lowerLim) & (route_df['duration'] < upperLim)]
 
-		# Calculate minute-level durations, averaged by week
-		route_df = route_df.groupby(route_df.index.weekday).resample('15Min', how=lambda x: np.sum(x) / len(x)).dropna() # np.mean does not work
-		route_df = route_df.astype('<m8[ns]') # convert Ints back to timestamps
-
-		# Reset index
-		route_df = route_df.reset_index().drop('level_0', axis=1).sort_values('start_time')
+		# Calculate average duration over an average day, resampled every 15 minutes
+		route_df = route_df.resample('15Min', how=lambda x: np.sum(x) / len(x)).dropna()
+		route_df['qtr_hour'] = route_df.index.map(lambda x: x.strftime("%H:%M:%S")) # pd.TimeGroup(freq='15Min') implicitly includes DayGrouper
+		route_df = route_df.groupby('qtr_hour')['duration'].apply(np.mean) # cannot use apply on entire df; must force on a column
+		route_df = route_df.sort_index()
 
 		# Format as strings for json serialization
 		route_df = route_df.astype(str)
-		route_df['duration'] = route_df['duration'].str.split().str[-1]
+		route_df = route_df.str.split().str[-1]
 
 		# Convert objects to list for json serialization
-		x_values = list(route_df['start_time'].values)
-		y_values = map(lambda x: '2016-01-01 '+x, list(route_df['duration'].values))
+		x_values = map(lambda x: '2016-01-01 '+x, list(route_df.index.values))
+		y_values = map(lambda x: '2016-01-01 '+x, list(route_df.values))
 
 		# Append to dictionary
 		json[route] = {'x': x_values, 'y': y_values}
 
-	cache.set(today, json, timeout)
+	cache.set(today, json, settings.TIMEOUT)
 	return json

@@ -14,7 +14,7 @@
 				<div class='red block'> </div>
 				<h3> Red Line </h3>
 				<span class='big'>{{ trips["Red Line"] }}</span>
-				<h4> ({{ num_trips["Red Line"] }}) </h4>
+				<h4> ({{ avg_num_trips["Red Line"] }}) </h4>
 			</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3 thirds'>
@@ -22,7 +22,7 @@
 				<div class='orange block'> </div>
 				<h3> Orange Line </h3>
 				<span class='big'>{{ trips["Orange Line"] }}</span>
-				<h4> ({{ num_trips["Orange Line"] }}) </h4>
+				<h4> ({{ avg_num_trips["Orange Line"] }}) </h4>
 			</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3 thirds'>
@@ -30,7 +30,7 @@
 				<div class='blue block'> </div>
 				<h3> Blue Line </h3>
 				<span class='big'>{{ trips["Blue Line"] }}</span>
-				<h4> ({{ num_trips["Blue Line"] }}) </h4>
+				<h4> ({{ avg_num_trips["Blue Line"] }}) </h4>
 			</div>
 		</div>
 	</div>
@@ -49,7 +49,7 @@
 				<div class='green block'> </div>
 				<h3> Green Line B </h3>
 				<span class='big'>{{ trips["Green Line B"] }}</span>
-				<h4> ({{ num_trips["Green Line B"] }}) </h4>
+				<h4> ({{ avg_num_trips["Green Line B"] }}) </h4>
 			</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
@@ -57,7 +57,7 @@
 				<div class='green block'> </div>
 				<h3> Green Line C </h3>
 				<span class='big'>{{ trips["Green Line C"] }}</span>
-				<h4> ({{ num_trips["Green Line C"] }}) </h4>
+				<h4> ({{ avg_num_trips["Green Line C"] }}) </h4>
 			</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
@@ -65,7 +65,7 @@
 				<div class='green block'> </div>
 				<h3> Green Line D </h3>
 				<span class='big'>{{ trips["Green Line D"] }}</span>
-				<h4> ({{ num_trips["Green Line D"] }}) </h4>
+				<h4> ({{ avg_num_trips["Green Line D"] }}) </h4>
 			</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
@@ -73,7 +73,7 @@
 				<div class='green block'> </div>
 				<h3> Green Line E </h3>
 				<span class='big'>{{ trips["Green Line E"] }}</span>
-				<h4> ({{ num_trips["Green Line E"] }}) </h4>
+				<h4> ({{ avg_num_trips["Green Line E"] }}) </h4>
 			</div>
 		</div>
 	</div>
@@ -94,7 +94,7 @@
 				<div id='Silver Line SL1' class='silver block'> </div>
 				<h3> Silver Line SL1  </h3>
 				<span class='big'>{{ trips["Silver Line SL1"] }}</span>
-				<h4> ({{ num_trips["Silver Line SL1"] }}) </h4>
+				<h4> ({{ avg_num_trips["Silver Line SL1"] }}) </h4>
 			</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
@@ -102,7 +102,7 @@
 				<div class='silver block'> </div>
 				<h3> Silver Line SL2 </h3>
 				<span class='big'>{{ trips["Silver Line SL2"] }}</span>
-				<h4> ({{ num_trips["Silver Line SL2"] }}) </h4>
+				<h4> ({{ avg_num_trips["Silver Line SL2"] }}) </h4>
 			</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
@@ -110,7 +110,7 @@
 				<div class='silver block'> </div>
 				<h3> Silver Line SL4 </h3>
 				<span class='big'>{{ trips["Silver Line SL4"] }}</span>
-				<h4> ({{ num_trips["Silver Line SL4"] }}) </h4>
+				<h4> ({{ avg_num_trips["Silver Line SL4"] }}) </h4>
 			</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
@@ -118,7 +118,7 @@
 				<div class='silver block'> </div>
 				<h3> Silver Line SL5 </h3>
 				<span class='big'>{{ trips["Silver Line SL5"] }}</span>
-				<h4> ({{ num_trips["Silver Line SL5"] }}) </h4>
+				<h4> ({{ avg_num_trips["Silver Line SL5"] }}) </h4>
 			</div>
 		</div>
 	</div>
@@ -146,10 +146,10 @@ var data = [
   {
     x: {{ value['x']|safe }},
     y: {{ value['y']|safe }},
-    type: 'scatter'
+    type: 'bar'
   }
 ];
-var layout = { paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)', title: "<b>Average trip length for the {{key}}</b>", };
+var layout = { paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)', title: "<b>Average trip duration for the {{key}} from start to finish</b>", xaxis: { tickformat: "%H:%M"}, yaxis: { tickformat: "%H:%M"} };
 Plotly.plot("{{key}}_reveal", data, layout, {showLink: false});
 {% endfor %}
 
