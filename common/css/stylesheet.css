@@ -4,24 +4,48 @@ body {
    	transform-origin: 50% -5%;
 }
 
-@media (max-width: 1240px) {
-	.wrapper { 
-  		width: 1024px !important; 
-  		margin: 0px auto;
-  	}
-}
-
-@media (max-width: 940px) {
-	.wrapper { 
-  		width: 1024px !important; 
-  		margin: 0px auto;
-  	}
-}
-
 h1 {
 	text-align: center;
 }
 
 .spacer {
 	margin-top: 40px;
+}
+
+/* 1.5-column offset */
+
+.col-xs-custom-offset,
+.col-sm-custom-offset,
+.col-md-custom-offset,
+.col-lg-custom-offset {
+    position: relative;
+    min-height: 1px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.col-xs-custom-offset {
+    width: 12.5%;
+    float: left;
+}
+
+@media (min-width: 768px) {
+    .col-sm-custom-offset {
+        width: 12.5%;
+        float: left;
+    }
+}
+
+@media (min-width: 992px) {
+    .col-md-custom-offset {
+        width: 12.5%;
+        float: left;
+    }
+}
+
+@media (min-width: 1200px) {
+    .col-lg-custom-offset {
+        width: 12.5%;
+        float: left;
+    }
 }

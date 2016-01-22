@@ -131,8 +131,8 @@ def get_avg_trip_times():
 		route_df = route_df.astype(str)
 		route_df = route_df.str.split().str[-1]
 
-		# Convert objects to list for json serialization
-		x_values = map(lambda x: '2016-01-01 '+x, list(route_df.index.values))
+		# Convert objects to list for json serialization (show early morning hours on next day)
+		x_values = map(lambda x: '2016-01-01 '+x if x >= "06:00:00" else '2016-01-02 '+x, list(route_df.index.values))
 		y_values = map(lambda x: '2016-01-01 '+x, list(route_df.values))
 
 		# Append to dictionary

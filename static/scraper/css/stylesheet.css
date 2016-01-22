@@ -14,11 +14,6 @@ p {
 	line-height: 25px;
 }
 
-.thirds {
-	display:inline-block;
-    float:none;
-}
-
 .col-lg-12 {
 	padding: 5% 0;
 	text-align: center;
@@ -30,6 +25,12 @@ p {
 	margin: 10% 0;
 	font-weight: bold;
 	font-size: 4em;
+}
+
+.hide-text {
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .block {

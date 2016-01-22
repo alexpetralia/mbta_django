@@ -9,72 +9,81 @@
 <div class='container-fluid'>
 
 	<div class='first row'>
-		<div class='col-lg-3 col-md-3 col-sm-3 thirds'>
-			<div id="Red Line" class='col-lg-12'>
+		<div class='col-lg-custom-offset col-md-custom-offset col-sm-custom-offset'></div>
+		<div class='col-lg-3 col-md-3 col-sm-3'>
+			<div id="Red Line" class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
 				<div class='red block'> </div>
 				<h3> Red Line </h3>
 				<span class='big'>{{ trips["Red Line"] }}</span>
 				<h4> ({{ avg_num_trips["Red Line"] }}) </h4>
 			</div>
+			<div class='visible-xs-block'>&nbsp;</div>
 		</div>
-		<div class='col-lg-3 col-md-3 col-sm-3 thirds'>
-			<div id="Orange Line" class='col-lg-12'>
+		<div class='col-lg-3 col-md-3 col-sm-3'>
+			<div id="Orange Line" class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
 				<div class='orange block'> </div>
 				<h3> Orange Line </h3>
 				<span class='big'>{{ trips["Orange Line"] }}</span>
 				<h4> ({{ avg_num_trips["Orange Line"] }}) </h4>
 			</div>
+			<div class='visible-xs-block'>&nbsp;</div>
 		</div>
-		<div class='col-lg-3 col-md-3 col-sm-3 thirds'>
-			<div id="Blue Line" class='col-lg-12'>
+		<div class='col-lg-3 col-md-3 col-sm-3'>
+			<div id="Blue Line" class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
 				<div class='blue block'> </div>
 				<h3> Blue Line </h3>
 				<span class='big'>{{ trips["Blue Line"] }}</span>
 				<h4> ({{ avg_num_trips["Blue Line"] }}) </h4>
 			</div>
+			<div class='visible-xs-block'>&nbsp;</div>
 		</div>
+		<div class='col-md-5ths'></div>
 	</div>
 
 	<div class='spacer'></div>
 
 	<div id='Red Line_reveal' class='plotly' style='display: none; width: 1080px; height: 400px;'> </div>
 
-	<div id='Orange Line_reveal' class='plotly'  style='display: none; width: 1080px; height: 400px;'> </div>
+	<div id='Orange Line_reveal' class='plotly' style='display: none; width: 1080px; height: 400px;'> </div>
 
 	<div id='Blue Line_reveal' class='plotly' style='display: none; width: 1080px; height: 400px;'> </div>
 
 	<div class='row'>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div id='Green Line B' class='col-lg-12'>
+			<div id='Green Line B' class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
 				<div class='green block'> </div>
 				<h3> Green Line B </h3>
 				<span class='big'>{{ trips["Green Line B"] }}</span>
 				<h4> ({{ avg_num_trips["Green Line B"] }}) </h4>
 			</div>
+			<div class='visible-xs-block'>&nbsp;</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div id='Green Line C' class='col-lg-12'>
+			<div id='Green Line C' class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
 				<div class='green block'> </div>
 				<h3> Green Line C </h3>
 				<span class='big'>{{ trips["Green Line C"] }}</span>
 				<h4> ({{ avg_num_trips["Green Line C"] }}) </h4>
 			</div>
+			<div class='visible-xs-block'>&nbsp;</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div id='Green Line D' class='col-lg-12'>
+			<div id='Green Line D' class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
 				<div class='green block'> </div>
 				<h3> Green Line D </h3>
 				<span class='big'>{{ trips["Green Line D"] }}</span>
 				<h4> ({{ avg_num_trips["Green Line D"] }}) </h4>
 			</div>
+			<div class='visible-xs-block'>&nbsp;</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div id='Green Line E' class='col-lg-12'>
+			<div id='Green Line E' class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
 				<div class='green block'> </div>
 				<h3> Green Line E </h3>
 				<span class='big'>{{ trips["Green Line E"] }}</span>
 				<h4> ({{ avg_num_trips["Green Line E"] }}) </h4>
 			</div>
+			<div class='visible-xs-block'>&nbsp;</div>
 		</div>
 	</div>
 
@@ -82,7 +91,7 @@
 
 	<div id='Green Line B_reveal' class='plotly' style='display: none; width: 1080px; height: 400px;'> </div>
 
-	<div id='Green Line C_reveal' class='plotly'  style='display: none; width: 1080px; height: 400px;'> </div>
+	<div id='Green Line C_reveal' class='plotly' style='display: none; width: 1080px; height: 400px;'> </div>
 
 	<div id='Green Line D_reveal' class='plotly' style='display: none; width: 1080px; height: 400px;'> </div>
 
@@ -90,36 +99,40 @@
 
 	<div class='row'>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div class='col-lg-12'>
+			<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
 				<div id='Silver Line SL1' class='silver block'> </div>
 				<h3> Silver Line SL1  </h3>
 				<span class='big'>{{ trips["Silver Line SL1"] }}</span>
 				<h4> ({{ avg_num_trips["Silver Line SL1"] }}) </h4>
 			</div>
+			<div class='visible-xs-block'>&nbsp;</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div id='Silver Line SL2' class='col-lg-12'>
+			<div id='Silver Line SL2' class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
 				<div class='silver block'> </div>
 				<h3> Silver Line SL2 </h3>
 				<span class='big'>{{ trips["Silver Line SL2"] }}</span>
 				<h4> ({{ avg_num_trips["Silver Line SL2"] }}) </h4>
 			</div>
+			<div class='visible-xs-block'>&nbsp;</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div id='Silver Line SL4' class='col-lg-12'>
+			<div id='Silver Line SL4' class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
 				<div class='silver block'> </div>
 				<h3> Silver Line SL4 </h3>
 				<span class='big'>{{ trips["Silver Line SL4"] }}</span>
 				<h4> ({{ avg_num_trips["Silver Line SL4"] }}) </h4>
 			</div>
+			<div class='visible-xs-block'>&nbsp;</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div id='Silver Line SL5' class='col-lg-12'>
+			<div id='Silver Line SL5' class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
 				<div class='silver block'> </div>
 				<h3> Silver Line SL5 </h3>
 				<span class='big'>{{ trips["Silver Line SL5"] }}</span>
 				<h4> ({{ avg_num_trips["Silver Line SL5"] }}) </h4>
 			</div>
+			<div class='visible-xs-block'>&nbsp;</div>
 		</div>
 	</div>
 
@@ -127,7 +140,7 @@
 
 	<div id='Silver Line SL1_reveal' class='plotly' style='display: none; width: 1080px; height: 400px;'> </div>
 
-	<div id='Silver Line SL2_reveal' class='plotly'  style='display: none; width: 1080px; height: 400px;'> </div>
+	<div id='Silver Line SL2_reveal' class='plotly' style='display: none; width: 1080px; height: 400px;'> </div>
 
 	<div id='Silver Line SL4_reveal' class='plotly' style='display: none; width: 1080px; height: 400px;'> </div>
 
@@ -139,24 +152,54 @@
 
 <script>
 
-// PLOTLY.JS
+// PLOTLY.JS (responsive)
+
+(function() {
 
 {% for key, value in avg_trip_times.iteritems() %}
+var WIDTH_IN_PERCENT_OF_PARENT = 80,
+    HEIGHT_IN_PERCENT_OF_PARENT = 80;
+var gd3 = d3.select("div[id='{{key}}_reveal']")
+    .style({
+        width: WIDTH_IN_PERCENT_OF_PARENT + '%',
+        'margin-left': (100 - WIDTH_IN_PERCENT_OF_PARENT) / 2 + '%',
+
+        height: HEIGHT_IN_PERCENT_OF_PARENT + 'vh',
+        'margin-top': (100 - HEIGHT_IN_PERCENT_OF_PARENT) / 2 + 'vh'
+    });
+var {{key|replace(" ", "_")}} = gd3.node();
 var data = [
   {
+    type: 'bar',
     x: {{ value['x']|safe }},
-    y: {{ value['y']|safe }},
-    type: 'bar'
-  }
+    y: {{ value['y']|safe }}
+  },
 ];
-var layout = { paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)', title: "<b>Average trip duration for the {{key}} from start to finish</b>", xaxis: { tickformat: "%H:%M"}, yaxis: { tickformat: "%H:%M"} };
-Plotly.plot("{{key}}_reveal", data, layout, {showLink: false});
+var layout = { 
+	paper_bgcolor: 'rgba(0,0,0,0)', 
+	plot_bgcolor: 'rgba(0,0,0,0)', 
+	title: "<b>Average trip duration for the {{key}} from start to finish</b>", 
+	xaxis: { 
+		tickformat: "%H:%M",
+		range: [1451646000000, 1451714400000] // utc-tz-adjustment
+	}, 
+	yaxis: { 
+			tickformat: "%H:%M",
+	},
+};
+$("div[id='{{key}}_reveal']").css("display", "block"); // must reveal div immediately before plotting
+Plotly.plot({{key|replace(" ", "_")}}, data, layout, {showLink: false});
+$("div[id='{{key}}_reveal']").hide(); // hide before user sees
 {% endfor %}
+{% for key, value in avg_trip_times.iteritems() %}
+window.onresize = function() { Plotly.Plots.resize( {{key|replace(" ", "_")}} ); };
+{% endfor %}
+// int(dt.strptime("2016-01-01 11:00:00", "%Y-%m-%d %H:%M:%S").strftime("%s"))*1000
+})();
 
-// JQUERY
+// JQUERY ANIMATIONS
 
 $(document).ready(function() {
-
 	{% for key, value in avg_trip_times.iteritems() %}
     $("div[id='{{key}}']").click(function() {
 		// $(".plotly").not("#{{key}}_reveal").hide(speed=500);

@@ -2,7 +2,7 @@
 
 **<a href="http://bostonmbta.info/" target="_blank">You can view this project live here.</a>**
 
-MBTA Trips is a django-powered web application which displays, for each MBTA route in Boston, the number of currently active MBTA trips and the average trip duration over a typical week. Every 10 seconds, a `celery` background worker scrapes .json data from the [MBTA Developer Portal](http://realtime.mbta.com/portal) containing information on all ongoing trips. The time at which new trips (*see footnote 1*) appear is saved, as well as when they disappear - the difference yields the trip's duration. Each completed trip is saved in a postgres database.
+MBTA Trips is a django-powered web application which displays, for each MBTA route in Boston, the number of currently active MBTA trips and the average trip duration over a typical week. Every 10 seconds, a `celery` background worker scrapes .json data from the <a href="http://realtime.mbta.com/portal" target="_blank">MBTA Developer Portal</a> containing information on all ongoing trips. The time at which new trips (*see footnote 1*) appear is saved, as well as when they disappear - the difference yields the trip's duration. Each completed trip is saved in a postgres database.
 
 The primary motivation for this project was to visualize when certain routes are busiest throughout a typical week. Additionally, this project was designed around using as many new technologies as possible as a learning experience.
 
@@ -54,7 +54,7 @@ If accessing the interactive prompt does not work for you, try using TCP/IP inst
 
 **6. Install and run the RabbitMQ server**
 
-I used [this](http://monkeyhacks.com/post/installing-rabbitmq-on-ubuntu-14-04) tutorial to install RabbitMQ. Those steps (slightly modified here) are:
+I used <a href="http://monkeyhacks.com/post/installing-rabbitmq-on-ubuntu-14-04" target="_blank">this</a> tutorial to install RabbitMQ. Those steps (slightly modified here) are:
 
 `sudo su -c "echo 'deb http://www.rabbitmq.com/debian testing main' >> /etc/apt/sources.list"`<br />
 `sudo wget https://www.rabbitmq.com/rabbitmq-signing-key-public.asc`<br />
@@ -71,7 +71,7 @@ This is required for the pandas module to install correctly.
 
 **8. Get your own API key**
 
-Register for an account [here](http://realtime.mbta.com/Portal/Account/Register) and request an API key.
+Register for an account <a href="http://realtime.mbta.com/Portal/Account/Register" target="_blank">here</a> and request an API key.
 
 Once you receive an API key, create an `api_key.py` in the folder mbta\_django/scraper/settings. It contains only one line: `API_KEY = <your_api_key_here>`
 
@@ -219,16 +219,15 @@ Note: ensure that `uwsgi_ctl` is configured to use `--http` and not `--socket`.
 * **Messaging library**: Kombu
 * **Process manager:** Supervisor
 * **CSS framework:** Bootstrap 3
-* **JS animations/AJAX framework:** jquery.js
-* **JS plotting framework:** plotly.js
+* **JS framework:** jquery.js (Ajax)
+* **JS plotting library:** plotly.js (responsive)
 
 ### To do
 
 **Critical**
-* fix responsiveness for mobile
 * add Ajax calls every 10s
-* fix shifting navbar (it has to do with navbar css)
 * load testing
+* fix shifting navbar (it has to do with navbar css)
 
 **Follow-up**
 * apiStatus should be using a message queue Publisher/Subscriber model (Kombu) or Unix socket instead of postgres
@@ -237,7 +236,11 @@ Note: ensure that `uwsgi_ctl` is configured to use `--http` and not `--socket`.
 
 ### License
 
-This software is distributed under the [MIT License](https://opensource.org/licenses/MIT).
+This software is distributed under the <a href="https://opensource.org/licenses/MIT" target="_blank">MIT License</a>.
+
+### Contact
+
+If you have any questions, bug reports or any other feedback, you can contact the author at <a href="http://alexpetralia.com/contact/" target="_blank">his personal website</a>.
 
 #### Footnotes
 
