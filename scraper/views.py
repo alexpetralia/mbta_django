@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.db.models import Avg, Sum
 from django.core.cache import cache
 from django.conf import settings
+from django.http import JsonResponse
 
 from .models import TripCount, CompletedTrip, apiStatus
 from .settings.routes import ROUTES_DICT
@@ -12,38 +13,11 @@ from datetime import datetime as dt
 
 def index(request):
 
-	# Check if the MBTA API is still alive (ie. returning a .json response)
-	status = apiStatus.objects.all().values().first()['status']
-
 	###############################
 	# Active trips for each route #
 	###############################
 
-	# [THIS SQL IS ACTUALLY SLOWER THAN MULTIPLE QUERIES]
-	# from django.db import connection
-	# sql = ("SELECT route, SUM(count) as count FROM ( "
-	# 			"SELECT DISTINCT ON (direction, route) route, count "
-	# 			"FROM scraper_tripcount "
-	# 			"ORDER BY route, direction, time DESC ) as t1 "
-	# 		"GROUP BY route")
-	# cursor = connection.cursor()
-	# cursor.execute(sql)
-	# trips = { str(k):int(v) if status else 0 for k, v in cursor.fetchall() }
-
-	trips = {}
-	for route in ROUTES_DICT:
-
-		# Get the direction of the most recent trip for that route
-		direction = get_direction(route)
-
-		# Get number of trips for first direction
-		num_trips_first_dir = TripCount.objects.filter(route__contains = route).order_by('-time').values('count').first()['count']
-	
-		# Get number of trips for second direction
-		num_trips_second_dir = TripCount.objects.filter(route__contains = route).exclude(direction__contains = direction).order_by('-time').values('count').first()['count']
-
-		# If alive, return number of trips
-		trips[route] = num_trips_first_dir + num_trips_second_dir if status else 0
+	trips = get_trip_counts()
 
 	##########################################
 	# Average number of trips for each route #
@@ -143,3 +117,42 @@ def get_avg_trip_times():
 
 	cache.set(today, json, settings.TIMEOUT)
 	return json
+
+def get_trip_counts():
+
+	# Check if the MBTA API is still alive (ie. returning a .json response)
+	status = apiStatus.objects.all().values().first()['status']
+
+	# [THIS SQL IS ACTUALLY SLOWER THAN MULTIPLE QUERIES]
+	# from django.db import connection
+	# sql = ("SELECT route, SUM(count) as count FROM ( "
+	# 			"SELECT DISTINCT ON (direction, route) route, count "
+	# 			"FROM scraper_tripcount "
+	# 			"ORDER BY route, direction, time DESC ) as t1 "
+	# 		"GROUP BY route")
+	# cursor = connection.cursor()
+	# cursor.execute(sql)
+	# trips = { str(k):int(v) if status else 0 for k, v in cursor.fetchall() }
+
+	trips = {}
+	for route in ROUTES_DICT:
+
+		# Get the direction of the most recent trip for that route
+		direction = get_direction(route)
+
+		# Get number of trips for first direction
+		num_trips_first_dir = TripCount.objects.filter(route__contains = route).order_by('-time').values('count').first()['count']
+	
+		# Get number of trips for second direction
+		num_trips_second_dir = TripCount.objects.filter(route__contains = route).exclude(direction__contains = direction).order_by('-time').values('count').first()['count']
+
+		# If alive, return number of trips
+		trips[route] = num_trips_first_dir + num_trips_second_dir if status else 0
+
+	return trips
+
+def http_request_trip_counts(request):
+	
+	trips = get_trip_counts()
+
+	return JsonResponse(trips)

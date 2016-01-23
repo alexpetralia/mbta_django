@@ -14,7 +14,7 @@
 			<div id="Red Line" class='col-lg-12 col-md-12 col-sm-12 col-xs-12 padded'>
 				<div class='red block'> </div>
 				<h4> Red Line </h4>
-				<span class='big'>{{ trips["Red Line"] }}</span>
+				<span id='Red Line_trips' class='big'>{{ trips["Red Line"] }}</span>
 				<h6> ({{ avg_num_trips["Red Line"] }}) </h6>
 			</div>
 			<div class='visible-xs-block'>&nbsp;</div>
@@ -23,7 +23,7 @@
 			<div id="Orange Line" class='col-lg-12 col-md-12 col-sm-12 col-xs-12 padded'>
 				<div class='orange block'> </div>
 				<h4> Orange Line </h4>
-				<span class='big'>{{ trips["Orange Line"] }}</span>
+				<span id='Orange Line_trips' class='big'>{{ trips["Orange Line"] }}</span>
 				<h6> ({{ avg_num_trips["Orange Line"] }}) </h6>
 			</div>
 			<div class='visible-xs-block'>&nbsp;</div>
@@ -32,7 +32,7 @@
 			<div id="Blue Line" class='col-lg-12 col-md-12 col-sm-12 col-xs-12 padded'>
 				<div class='blue block'> </div>
 				<h4> Blue Line </h4>
-				<span class='big'>{{ trips["Blue Line"] }}</span>
+				<span id='Blue Line_trips' class='big'>{{ trips["Blue Line"] }}</span>
 				<h6> ({{ avg_num_trips["Blue Line"] }}) </h6>
 			</div>
 			<div class='visible-xs-block'>&nbsp;</div>
@@ -49,37 +49,37 @@
 
 	<div class='row'>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div id='Green Line B' class='col-lg-12 col-md-12 col-sm-12  col-xs-12 padded'>
+			<div id='Green Line B' class='col-lg-12 col-md-12 col-sm-12 col-xs-12 padded'>
 				<div class='green block'> </div>
 				<h4> Green Line B </h4>
-				<span class='big'>{{ trips["Green Line B"] }}</span>
+				<span id='Green Line B_trips' class='big'> {{ trips['Green Line B'] }} </span>
 				<h6> ({{ avg_num_trips["Green Line B"] }}) </h6>
 			</div>
 			<div class='visible-xs-block'>&nbsp;</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div id='Green Line C' class='col-lg-12 col-md-12 col-sm-12  col-xs-12 padded'>
+			<div id='Green Line C' class='col-lg-12 col-md-12 col-sm-12 col-xs-12 padded'>
 				<div class='green block'> </div>
 				<h4> Green Line C </h4>
-				<span class='big'>{{ trips["Green Line C"] }}</span>
+				<span id='Green Line C_trips' class='big'> {{ trips['Green Line C'] }} </span>
 				<h6> ({{ avg_num_trips["Green Line C"] }}) </h6>
 			</div>
 			<div class='visible-xs-block'>&nbsp;</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div id='Green Line D' class='col-lg-12 col-md-12 col-sm-12  col-xs-12 padded'>
+			<div id='Green Line D' class='col-lg-12 col-md-12 col-sm-12 col-xs-12 padded'>
 				<div class='green block'> </div>
 				<h4> Green Line D </h4>
-				<span class='big'>{{ trips["Green Line D"] }}</span>
+				<span id='Green Line D_trips' class='big'> {{ trips['Green Line D'] }} </span>
 				<h6> ({{ avg_num_trips["Green Line D"] }}) </h6>
 			</div>
 			<div class='visible-xs-block'>&nbsp;</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div id='Green Line E' class='col-lg-12 col-md-12 col-sm-12  col-xs-12 padded'>
+			<div id='Green Line E' class='col-lg-12 col-md-12 col-sm-12 col-xs-12 padded'>
 				<div class='green block'> </div>
 				<h4> Green Line E </h4>
-				<span class='big'>{{ trips["Green Line E"] }}</span>
+				<span id='Green Line E_trips' class='big'> {{ trips['Green Line E'] }} </span>
 				<h6> ({{ avg_num_trips["Green Line E"] }}) </h6>
 			</div>
 			<div class='visible-xs-block'>&nbsp;</div>
@@ -98,37 +98,37 @@
 
 	<div class='row'>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div class='col-lg-12 col-md-12 col-sm-12  col-xs-12 padded'>
+			<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12 padded'>
 				<div id='Silver Line SL1' class='silver block'> </div>
 				<h4> Silver Line SL1  </h4>
-				<span class='big'>{{ trips["Silver Line SL1"] }}</span>
+				<span id='Silver Line SL1_trips' class='big'>{{ trips["Silver Line SL1"] }}</span>
 				<h6> ({{ avg_num_trips["Silver Line SL1"] }}) </h6>
 			</div>
 			<div class='visible-xs-block'>&nbsp;</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div id='Silver Line SL2' class='col-lg-12 col-md-12 col-sm-12  col-xs-12 padded'>
+			<div id='Silver Line SL2' class='col-lg-12 col-md-12 col-sm-12 col-xs-12 padded'>
 				<div class='silver block'> </div>
 				<h4> Silver Line SL2 </h4>
-				<span class='big'>{{ trips["Silver Line SL2"] }}</span>
+				<span id='Silver Line SL2_trips' class='big'>{{ trips["Silver Line SL2"] }}</span>
 				<h6> ({{ avg_num_trips["Silver Line SL2"] }}) </h6>
 			</div>
 			<div class='visible-xs-block'>&nbsp;</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div id='Silver Line SL4' class='col-lg-12 col-md-12 col-sm-12  col-xs-12 padded'>
+			<div id='Silver Line SL4' class='col-lg-12 col-md-12 col-sm-12 col-xs-12 padded'>
 				<div class='silver block'> </div>
 				<h4> Silver Line SL4 </h4>
-				<span class='big'>{{ trips["Silver Line SL4"] }}</span>
+				<span id='Silver Line SL4_trips' class='big'>{{ trips["Silver Line SL4"] }}</span>
 				<h6> ({{ avg_num_trips["Silver Line SL4"] }}) </h6>
 			</div>
 			<div class='visible-xs-block'>&nbsp;</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div id='Silver Line SL5' class='col-lg-12 col-md-12 col-sm-12  col-xs-12 padded'>
+			<div id='Silver Line SL5' class='col-lg-12 col-md-12 col-sm-12 col-xs-12 padded'>
 				<div class='silver block'> </div>
 				<h4> Silver Line SL5 </h4>
-				<span class='big'>{{ trips["Silver Line SL5"] }}</span>
+				<span id='Silver Line SL5_trips' class='big'>{{ trips["Silver Line SL5"] }}</span>
 				<h6> ({{ avg_num_trips["Silver Line SL5"] }}) </h6>
 			</div>
 			<div class='visible-xs-block'>&nbsp;</div>
@@ -180,7 +180,7 @@ var layout = {
 	title: "<b>Average trip duration for the {{key}} from start to finish</b>", 
 	xaxis: { 
 		tickformat: "%-I:%M %p",
-		range: [1451646000000, 1451714400000] // utc-tz-adjustment
+		range: [1451646000000, 1451721600000] // utc-tz-adjustment
 	}, 
 	yaxis: { 
 			tickformat: "%-H:%M min",
@@ -196,7 +196,7 @@ window.onresize = function() { Plotly.Plots.resize( {{key|replace(" ", "_")}} );
 // int(dt.strptime("2016-01-01 11:00:00", "%Y-%m-%d %H:%M:%S").strftime("%s"))*1000
 })();
 
-// JQUERY ANIMATIONS
+// ANIMATIONS
 
 $(document).ready(function() {
 	{% for key, value in avg_trip_times.iteritems() %}
@@ -206,6 +206,24 @@ $(document).ready(function() {
 
     });
     {% endfor %}
+});
+
+// AJAX
+
+function refresh() {
+	$.ajax({
+		url: "/request",
+		success: function(data) {
+			{% for key, value in avg_trip_times.iteritems() %}
+			$("span[id='{{ key }}_trips']").html(data['{{ key }}']);
+			{% endfor %}
+		}
+	});
+};
+
+$(document).ready(function ($) {
+	refresh();
+	var interval = setInterval("refresh()", 8000);
 });
 
 </script>

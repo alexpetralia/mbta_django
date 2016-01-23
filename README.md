@@ -225,7 +225,6 @@ Note: ensure that `uwsgi_ctl` is configured to use `--http` and not `--socket`.
 ### To do
 
 **Critical**
-* add Ajax calls every 10s
 * load testing
 
 **Follow-up**
