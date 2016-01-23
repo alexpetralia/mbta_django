@@ -1,9 +1,9 @@
 h3 {
-	margin-top: 10%;
+	text-align: center;
 }
 
-p {
-	font-size: 1.5em;
+h4 {
+	margin-top: 15%;
 }
 
 .first.row {
@@ -14,7 +14,7 @@ p {
 	line-height: 25px;
 }
 
-.col-lg-12 {
+.padded {
 	padding: 5% 0;
 	text-align: center;
 	cursor: pointer;
@@ -24,7 +24,7 @@ p {
 	display: block;
 	margin: 10% 0;
 	font-weight: bold;
-	font-size: 4em;
+	font-size: 2em;
 }
 
 .hide-text {
@@ -65,7 +65,7 @@ p {
 	border: 5px solid rgba(80, 80, 80, .1);
 }
 
-.plotly {
+.plotly.js-plotly-plot {
 	display: block;
-	margin: 0px auto;
+	margin-top: 0vh !important;
 }

@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h1><strong>How many MBTA vehicles are running in Boston right now?</strong></h3>	
+<h3><strong>How many MBTA vehicles are running in Boston right now?</strong></h4>	
 
 <br /> 
 
@@ -11,33 +11,32 @@
 	<div class='first row'>
 		<div class='col-lg-custom-offset col-md-custom-offset col-sm-custom-offset'></div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div id="Red Line" class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+			<div id="Red Line" class='col-lg-12 col-md-12 col-sm-12 col-xs-12 padded'>
 				<div class='red block'> </div>
-				<h3> Red Line </h3>
+				<h4> Red Line </h4>
 				<span class='big'>{{ trips["Red Line"] }}</span>
-				<h4> ({{ avg_num_trips["Red Line"] }}) </h4>
+				<h6> ({{ avg_num_trips["Red Line"] }}) </h6>
 			</div>
 			<div class='visible-xs-block'>&nbsp;</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div id="Orange Line" class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+			<div id="Orange Line" class='col-lg-12 col-md-12 col-sm-12 col-xs-12 padded'>
 				<div class='orange block'> </div>
-				<h3> Orange Line </h3>
+				<h4> Orange Line </h4>
 				<span class='big'>{{ trips["Orange Line"] }}</span>
-				<h4> ({{ avg_num_trips["Orange Line"] }}) </h4>
+				<h6> ({{ avg_num_trips["Orange Line"] }}) </h6>
 			</div>
 			<div class='visible-xs-block'>&nbsp;</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div id="Blue Line" class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+			<div id="Blue Line" class='col-lg-12 col-md-12 col-sm-12 col-xs-12 padded'>
 				<div class='blue block'> </div>
-				<h3> Blue Line </h3>
+				<h4> Blue Line </h4>
 				<span class='big'>{{ trips["Blue Line"] }}</span>
-				<h4> ({{ avg_num_trips["Blue Line"] }}) </h4>
+				<h6> ({{ avg_num_trips["Blue Line"] }}) </h6>
 			</div>
 			<div class='visible-xs-block'>&nbsp;</div>
 		</div>
-		<div class='col-md-5ths'></div>
 	</div>
 
 	<div class='spacer'></div>
@@ -50,38 +49,38 @@
 
 	<div class='row'>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div id='Green Line B' class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+			<div id='Green Line B' class='col-lg-12 col-md-12 col-sm-12  col-xs-12 padded'>
 				<div class='green block'> </div>
-				<h3> Green Line B </h3>
+				<h4> Green Line B </h4>
 				<span class='big'>{{ trips["Green Line B"] }}</span>
-				<h4> ({{ avg_num_trips["Green Line B"] }}) </h4>
+				<h6> ({{ avg_num_trips["Green Line B"] }}) </h6>
 			</div>
 			<div class='visible-xs-block'>&nbsp;</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div id='Green Line C' class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+			<div id='Green Line C' class='col-lg-12 col-md-12 col-sm-12  col-xs-12 padded'>
 				<div class='green block'> </div>
-				<h3> Green Line C </h3>
+				<h4> Green Line C </h4>
 				<span class='big'>{{ trips["Green Line C"] }}</span>
-				<h4> ({{ avg_num_trips["Green Line C"] }}) </h4>
+				<h6> ({{ avg_num_trips["Green Line C"] }}) </h6>
 			</div>
 			<div class='visible-xs-block'>&nbsp;</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div id='Green Line D' class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+			<div id='Green Line D' class='col-lg-12 col-md-12 col-sm-12  col-xs-12 padded'>
 				<div class='green block'> </div>
-				<h3> Green Line D </h3>
+				<h4> Green Line D </h4>
 				<span class='big'>{{ trips["Green Line D"] }}</span>
-				<h4> ({{ avg_num_trips["Green Line D"] }}) </h4>
+				<h6> ({{ avg_num_trips["Green Line D"] }}) </h6>
 			</div>
 			<div class='visible-xs-block'>&nbsp;</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div id='Green Line E' class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+			<div id='Green Line E' class='col-lg-12 col-md-12 col-sm-12  col-xs-12 padded'>
 				<div class='green block'> </div>
-				<h3> Green Line E </h3>
+				<h4> Green Line E </h4>
 				<span class='big'>{{ trips["Green Line E"] }}</span>
-				<h4> ({{ avg_num_trips["Green Line E"] }}) </h4>
+				<h6> ({{ avg_num_trips["Green Line E"] }}) </h6>
 			</div>
 			<div class='visible-xs-block'>&nbsp;</div>
 		</div>
@@ -99,38 +98,38 @@
 
 	<div class='row'>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+			<div class='col-lg-12 col-md-12 col-sm-12  col-xs-12 padded'>
 				<div id='Silver Line SL1' class='silver block'> </div>
-				<h3> Silver Line SL1  </h3>
+				<h4> Silver Line SL1  </h4>
 				<span class='big'>{{ trips["Silver Line SL1"] }}</span>
-				<h4> ({{ avg_num_trips["Silver Line SL1"] }}) </h4>
+				<h6> ({{ avg_num_trips["Silver Line SL1"] }}) </h6>
 			</div>
 			<div class='visible-xs-block'>&nbsp;</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div id='Silver Line SL2' class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+			<div id='Silver Line SL2' class='col-lg-12 col-md-12 col-sm-12  col-xs-12 padded'>
 				<div class='silver block'> </div>
-				<h3> Silver Line SL2 </h3>
+				<h4> Silver Line SL2 </h4>
 				<span class='big'>{{ trips["Silver Line SL2"] }}</span>
-				<h4> ({{ avg_num_trips["Silver Line SL2"] }}) </h4>
+				<h6> ({{ avg_num_trips["Silver Line SL2"] }}) </h6>
 			</div>
 			<div class='visible-xs-block'>&nbsp;</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div id='Silver Line SL4' class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+			<div id='Silver Line SL4' class='col-lg-12 col-md-12 col-sm-12  col-xs-12 padded'>
 				<div class='silver block'> </div>
-				<h3> Silver Line SL4 </h3>
+				<h4> Silver Line SL4 </h4>
 				<span class='big'>{{ trips["Silver Line SL4"] }}</span>
-				<h4> ({{ avg_num_trips["Silver Line SL4"] }}) </h4>
+				<h6> ({{ avg_num_trips["Silver Line SL4"] }}) </h6>
 			</div>
 			<div class='visible-xs-block'>&nbsp;</div>
 		</div>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div id='Silver Line SL5' class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+			<div id='Silver Line SL5' class='col-lg-12 col-md-12 col-sm-12  col-xs-12 padded'>
 				<div class='silver block'> </div>
-				<h3> Silver Line SL5 </h3>
+				<h4> Silver Line SL5 </h4>
 				<span class='big'>{{ trips["Silver Line SL5"] }}</span>
-				<h4> ({{ avg_num_trips["Silver Line SL5"] }}) </h4>
+				<h6> ({{ avg_num_trips["Silver Line SL5"] }}) </h6>
 			</div>
 			<div class='visible-xs-block'>&nbsp;</div>
 		</div>
@@ -180,11 +179,11 @@ var layout = {
 	plot_bgcolor: 'rgba(0,0,0,0)', 
 	title: "<b>Average trip duration for the {{key}} from start to finish</b>", 
 	xaxis: { 
-		tickformat: "%H:%M",
+		tickformat: "%-I:%M %p",
 		range: [1451646000000, 1451714400000] // utc-tz-adjustment
 	}, 
 	yaxis: { 
-			tickformat: "%H:%M",
+			tickformat: "%-H:%M min",
 	},
 };
 $("div[id='{{key}}_reveal']").css("display", "block"); // must reveal div immediately before plotting

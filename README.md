@@ -1,8 +1,8 @@
-# MBTA Trips
+# MBTA Live
 
 **<a href="http://bostonmbta.info/" target="_blank">You can view this project live here.</a>**
 
-MBTA Trips is a django-powered web application which displays, for each MBTA route in Boston, the number of currently active MBTA trips and the average trip duration over a typical week. Every 10 seconds, a `celery` background worker scrapes .json data from the <a href="http://realtime.mbta.com/portal" target="_blank">MBTA Developer Portal</a> containing information on all ongoing trips. The time at which new trips (*see footnote 1*) appear is saved, as well as when they disappear - the difference yields the trip's duration. Each completed trip is saved in a postgres database.
+MBTA Live is a django-powered web application which displays, for each MBTA route in Boston, the number of currently active MBTA trips and the average trip duration over a typical week. Every 10 seconds, a `celery` background worker scrapes .json data from the <a href="http://realtime.mbta.com/portal" target="_blank">MBTA Developer Portal</a> containing information on all ongoing trips. The time at which new trips (*see footnote 1*) appear is saved, as well as when they disappear - the difference yields the trip's duration. Each completed trip is saved in a postgres database.
 
 The primary motivation for this project was to visualize when certain routes are busiest throughout a typical week. Additionally, this project was designed around using as many new technologies as possible as a learning experience.
 
@@ -176,7 +176,7 @@ However, because you updated a couple of files with your specific machine's sett
 
 `git stash` in  "mbta_django/mbta_django" (ie. where your `settings.py` is located)
 
-Then run `git pull`. Finally, to revert to your pre-updated config settings, go back to both folders and enter `git stash pop`.
+You may have to `git add <file>` specifically to a file to make sure it is ignored. After, run `git pull`. Finally, to revert to your pre-updated config settings, go back to both folders and enter `git stash pop`.
 
 ### Usage
 
@@ -227,7 +227,6 @@ Note: ensure that `uwsgi_ctl` is configured to use `--http` and not `--socket`.
 **Critical**
 * add Ajax calls every 10s
 * load testing
-* fix shifting navbar (it has to do with navbar css)
 
 **Follow-up**
 * apiStatus should be using a message queue Publisher/Subscriber model (Kombu) or Unix socket instead of postgres

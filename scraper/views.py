@@ -118,7 +118,7 @@ def get_avg_trip_times():
 		med = np.median(route_df['duration'])
 		# mad = calc_mad(route_df['duration'])
 		buffer_mins = med * .1
-		lowerLim, upperLim = med - 3 * buffer_mins, med + 10 * buffer_mins
+		lowerLim, upperLim = med - 3 * buffer_mins, med + 8 * buffer_mins
 		route_df = route_df[(route_df['duration'] > lowerLim) & (route_df['duration'] < upperLim)]
 
 		# Calculate average duration over an average day, resampled every 15 minutes
@@ -126,6 +126,9 @@ def get_avg_trip_times():
 		route_df['qtr_hour'] = route_df.index.map(lambda x: x.strftime("%H:%M:%S")) # pd.TimeGroup(freq='15Min') implicitly includes DayGrouper
 		route_df = route_df.groupby('qtr_hour')['duration'].apply(np.mean) # cannot use apply on entire df; must force on a column
 		route_df = route_df.sort_index()
+
+		# Place early-morning hours at end of dataframe (plotly order matters)
+		route_df = pd.concat([route_df.ix['06:00:00':], route_df.ix[:'02:15:00']])
 
 		# Format as strings for json serialization
 		route_df = route_df.astype(str)

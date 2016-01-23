@@ -2,21 +2,29 @@
 
 {% block content %}
 
-<h1><strong>About this project</strong></h1>
+<h3><strong>About this project</strong></h3>
 
 <div class='container-fluid'>
 
 	<br />
 
-	<center><img src="{{ static('images/t-logo.png') }}"></center>
+	<center><img src="{{ static('images/t-logo.png') }}" style="width: 175px; height: 175px"></center>
 
 	<div class="spacer"></div>
 
-	<p>MBTA Trips is a Python-powered webapp which displays, for each MBTA route in Boston, the number of currently active MBTA trips and the average trip duration over a typical day. Ideally, this information can be used as proxies for when the subway system is busiest. I always wondered "how many vehicles are actually running", so I decided to build this app to answer that question.</p>
+	<div class='col-lg-10 col-md-10 col-sm-10 col-xs-10 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1'>
+
+		<p>Have you ever wondered, while waiting for the T, just how many trains were actually running? MBTA Live was designed to show in real-time the amount of active trains for each of the major MBTA lines in Boston, MA. MBTA Live also graphs a "typical" day for each route - how long did a trip take from start to finish? Ideally, these data can be used to see just how busy the T is, and when it's best to avoid it.</p>
+
+		<p>MBTA Live is a Python-powered webapp. Try it on your phone too!</p>
+
+		<p>You can learn more about the author <strong><a href="http://alexpetralia.com/" target="_blank">here</a></strong>.</p>
+
+	</div>
 
 	<div class="spacer"></div>
 
-	<p>You can learn more about the author <strong><a href="http://alexpetralia.com/" target="_blank">here</a></strong>.</p>
+	
 
 </div>
 
