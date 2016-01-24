@@ -3,7 +3,7 @@ from django.db.models import Avg, Sum
 from django.core.cache import cache
 from django.conf import settings
 from django.http import JsonResponse
-from djangosecure.decorators import frame_deny_exempt
+from django.views.decorators.clickjacking import xframe_options_exempt
 
 from .models import TripCount, CompletedTrip, apiStatus
 from .settings.routes import ROUTES_DICT
@@ -12,7 +12,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime as dt, timedelta as td
 
-@frame_deny_exempt
+@xframe_options_exempt
 def index(request):
 
 	###############################
