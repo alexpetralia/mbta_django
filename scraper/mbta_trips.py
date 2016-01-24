@@ -5,7 +5,6 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 os.chdir(BASE_DIR)
 
 from datetime import timedelta, datetime as dt
-# from django.conf import settings as django_settings
 import requests
 import time
 import logging

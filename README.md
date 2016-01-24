@@ -50,7 +50,7 @@ Run the following commands:
 `\q` (to quit)<br />
 `sudo -u postgres createdb mbta`<br />
 
-If accessing the interactive prompt does not work for you, try using TCP/IP instead of Unix sockets. To do so, type `psl postgres -h 127.0.0.1 -d mbta` (where `mbta` is the name of your database) to get around the the default connecting behavior. Once you are in the interactive prompt, you can run your normal SQL commands (eg. `SELECT * FROM table WHERE...`). Don't forget a `;` to terminate your commands!
+If accessing the interactive prompt does not work for you, try using TCP/IP instead of Unix sockets. To do so, type `psql postgres -h 127.0.0.1 -d mbta` (where `mbta` is the name of your database) to get around the the default connecting behavior. Once you are in the interactive prompt, you can run your normal SQL commands (eg. `SELECT * FROM table WHERE...`). Don't forget a `;` to terminate your commands!
 
 **6. Install and run the RabbitMQ server**
 
