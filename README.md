@@ -23,7 +23,7 @@ Within your projects folder that will house the mbta\_django repo, enter:
 
 **3. Create a new virtual environment**
 
-I would advise against using `python3-venv` because it will default to Python 3 for package installation. This is problematic when installing `supervisor`, which requires Pyhon 2. I also advise against Anaconda's virtual environment manager with this specific project. Within the "mbta_django folder", run:
+I would advise against using `python3-venv` because it will default to Python 3 for package installation. This is problematic when installing `supervisor`, which requires Python 2. I also advise against Anaconda's virtual environment manager with this specific project. Within the "mbta_django folder", run:
 
 `virtualenv venv` (uses the existing "venv" directory that you cloned)
 
@@ -124,7 +124,7 @@ Finally, edit to `/etc/nginx/nginx.conf`. Nginx needs to be run with the same us
 
 For now, nginx should show an error because it is trying to connect to the uWSGI socket that's not yet configured. We'll set that up next.
 
-If you are having errors with nginx (eg. 503 Bad Gateway), check the log via `tail -5 /var/log/nginx/error.log`. You can restart the server using `sudo service nginx restart`. If you run into permissions issues, verify again that your cloned repo uses `chmod -R 755 <dirname>` permissions.
+If you are having errors with nginx (eg. 503 Bad Gateway because nginx cannot find the uWSGI socket or 505 Server Error because of a django error), check the log via `tail -5 /var/log/nginx/error.log`. You can restart the server using `sudo service nginx restart`. If you run into permissions issues, verify again that your cloned repo uses `chmod -R 755 <dirname>` permissions.
 
 **14. Install memcached**
 
@@ -181,10 +181,11 @@ You may have to `git add <file>` specifically to a file to make sure it is ignor
 ### Usage
 
 ###### To start supervisor processes, type:
-`sudo supervisorctl restart all`
+`sudo supervisorctl restart all`<br />
+`sudo supervisorctl restart <process name>` (for a specific process)
 
 ###### To check the status of your supervisor processes, type:
-`sudo supervisorctl status`
+`sudo supervisorctl`
 
 ### Debugging individual processes
 
@@ -224,10 +225,6 @@ Note: ensure that `uwsgi_ctl` is configured to use `--http` and not `--socket`.
 
 ### To do
 
-**Critical**
-* load testing
-
-**Follow-up**
 * apiStatus should be using a message queue Publisher/Subscriber model (Kombu) or Unix socket instead of postgres
 * add more routes (?)
 * jquery only 1 plot at a time (?)
@@ -240,7 +237,7 @@ This software is distributed under the <a href="https://opensource.org/licenses/
 
 If you have any questions, bug reports or any other feedback, you can contact the author at <a href="http://alexpetralia.com/contact/" target="_blank">his personal website</a>.
 
-#### Footnotes
+##### Footnotes
 
 1. A "new trip" is defined as a trip with a unique trip_id for that day. Often however, a trip appears with one trip\_id, disappears, then reappears seconds or minutes later with a different trip\_id, but same vehicle\_id, route and direction. For all intents and purposes, it is the same trip. The second trip is not a new trip. If a trip follows this pattern, it is considered a single trip by the program.
 
