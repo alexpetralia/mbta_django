@@ -2,9 +2,9 @@
 
 **<a href="http://bostonmbta.info/" target="_blank">You can view this project live here.</a>**
 
-MBTA Live is a django-powered web application which displays, for each MBTA route in Boston, the number of currently active MBTA trips and the average trip duration over a typical week. Every 10 seconds, a `celery` background worker scrapes .json data from the <a href="http://realtime.mbta.com/portal" target="_blank">MBTA Developer Portal</a> containing information on all ongoing trips. The time at which new trips (*see footnote 1*) appear is saved, as well as when they disappear - the difference yields the trip's duration. Each completed trip is saved in a postgres database.
+MBTA Live is a django-powered web application which displays, for each MBTA route in Boston, the number of currently active MBTA trips and the average trip duration over a typical day. Every 10 seconds, a `celery` background worker scrapes .json data from the <a href="http://realtime.mbta.com/portal" target="_blank">MBTA Developer Portal</a> containing information on all ongoing trips. The time at which new trips (*see footnote 1*) appear is saved, as well as when they disappear - the difference yields the trip's duration. Each completed trip is saved in a postgres database.
 
-The primary motivation for this project was to visualize when certain routes are busiest throughout a typical week. Additionally, this project was designed around using as many new technologies as possible as a learning experience.
+The primary motivation for this project was to visualize when certain routes are busiest throughout a typical day. Additionally, this project was designed around using as many new technologies as possible as a learning experience.
 
 ### Installation for Ubuntu Linux
 
