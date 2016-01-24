@@ -180,10 +180,16 @@ var layout = {
 	title: "<b>Average trip duration for the {{key}} from start to finish</b>", 
 	xaxis: { 
 		tickformat: "%-I:%M %p",
-		range: [1451646000000, 1451721600000] // utc-tz-adjustment
+		range: [1451646000000, 1451719800000], // utc-tz-adjustment
+		fixedrange: true,
 	}, 
 	yaxis: { 
-			tickformat: "%-H:%M min",
+		tickformat: "%-M mins",
+		range: [{{ range_min[ key ] }}, {{ range_max [ key ] }}],
+		fixedrange: true,
+	},
+	margin: {
+		pad: 2,
 	},
 };
 $("div[id='{{key}}_reveal']").css("display", "block"); // must reveal div immediately before plotting
@@ -193,7 +199,6 @@ $("div[id='{{key}}_reveal']").hide(); // hide before user sees
 {% for key, value in avg_trip_times.iteritems() %}
 window.onresize = function() { Plotly.Plots.resize( {{key|replace(" ", "_")}} ); };
 {% endfor %}
-// int(dt.strptime("2016-01-01 11:00:00", "%Y-%m-%d %H:%M:%S").strftime("%s"))*1000
 })();
 
 // ANIMATIONS

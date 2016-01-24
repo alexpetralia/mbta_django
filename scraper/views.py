@@ -9,7 +9,7 @@ from .settings.routes import ROUTES_DICT
 
 import pandas as pd
 import numpy as np
-from datetime import datetime as dt
+from datetime import datetime as dt, timedelta as td
 
 def index(request):
 
@@ -39,7 +39,7 @@ def index(request):
 	# Average trip times #
 	######################
 
-	avg_trip_times_all = get_avg_trip_times()
+	avg_trip_times_all, range_min, range_max = get_avg_trip_times()
 	filter = ('Red Line', 'Blue Line', 'Orange Line', 'Green Line B', 'Green Line C', 'Green Line D', 'Green Line E', 'Silver Line SL1', 'Silver Line SL2', 'Silver Line SL4', 'Silver Line SL5',) # can only pass routes into the dict that have associated plotly charts. if a route is passed without one, no plotly chart will display
 	avg_trip_times = {k:v for k, v in avg_trip_times_all.items() if k in filter}
 
@@ -76,11 +76,11 @@ def get_avg_trip_times():
 
 	# Before expensive calculation, check if it was already computed today and stored in Memcached
 	today = str(dt.now().date())
-	cached_json = cache.get(today)
-	if cached_json is not None:
-		return cached_json
+	memcached_response = cache.get(today)
+	if memcached_response is not None:
+		return memcached_response
 
-	json = {}
+	json, range_min_list, range_max_list = {}, {}, {}
 	for route in routes:
 		
 		# Take route subset from the entire query
@@ -104,6 +104,24 @@ def get_avg_trip_times():
 		# Place early-morning hours at end of dataframe (plotly order matters)
 		route_df = pd.concat([route_df.ix['06:00:00':], route_df.ix[:'02:15:00']])
 
+		# Calculate range values for plotly.js plots in Unix time
+		# Must use fixed range because plotly.js does not allow (auto, fixed) format - both must be fixed or auto. For our plotly.js graphs, we need conditional fixed max (ie. 55 mins or less) and auto min
+		range_min_delta = route_df.min()
+		range_min = dt(2016, 1, 1) + range_min_delta - td(minutes=2)
+		unix_range_min = int(range_min.strftime("%s"))*1000
+
+		# If max duration is too low (ie. < 35 mins) or too high (ie. > 55 minutes), override with fixed limits
+		range_max_delta = route_df.max()
+		range_max = dt(2016, 1, 1) + range_max_delta
+		range_max_unix = int(range_max.strftime("%s"))*1000
+		unix_lims = (1451626500000, 1451627700000) # Unix equivalent of 35 and 55 minutes
+		if range_max_unix < unix_lims[0]: 
+			unix_range_max = unix_lims[0]
+		elif range_max_unix > unix_lims[1]: 
+			unix_range_max = unix_lims[1]
+		else: 
+			unix_range_max = range_max_unix
+
 		# Format as strings for json serialization
 		route_df = route_df.astype(str)
 		route_df = route_df.str.split().str[-1]
@@ -114,9 +132,12 @@ def get_avg_trip_times():
 
 		# Append to dictionary
 		json[route] = {'x': x_values, 'y': y_values}
+		range_min_list[route] = unix_range_min
+		range_max_list[route] = unix_range_max
 
-	cache.set(today, json, settings.TIMEOUT)
-	return json
+	cache.set(today, (json, range_min_list, range_max_list), settings.TIMEOUT)
+
+	return json, range_min_list, range_max_list
 
 def get_trip_counts():
 
