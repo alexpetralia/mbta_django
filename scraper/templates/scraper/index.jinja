@@ -39,7 +39,7 @@
 		</div>
 	</div>
 
-	<div class='spacer'></div>
+	<div class='spacer visible-lg-block visible-md-block visible-sm-block'></div>
 
 	<div id='Red Line_reveal' class='plotly' style='display: none; width: 1080px; height: 400px;'> </div>
 
@@ -86,7 +86,7 @@
 		</div>
 	</div>
 
-	<div class='spacer'></div>
+	<div class='spacer visible-lg-block visible-md-block visible-sm-block'></div>
 
 	<div id='Green Line B_reveal' class='plotly' style='display: none; width: 1080px; height: 400px;'> </div>
 
@@ -135,7 +135,7 @@
 		</div>
 	</div>
 
-	<div class='spacer'></div>
+	<div class='spacer visible-lg-block visible-md-block visible-sm-block'></div>
 
 	<div id='Silver Line SL1_reveal' class='plotly' style='display: none; width: 1080px; height: 400px;'> </div>
 
@@ -157,7 +157,7 @@
 
 {% for key, value in avg_trip_times.iteritems() %}
 var WIDTH_IN_PERCENT_OF_PARENT = 80,
-    HEIGHT_IN_PERCENT_OF_PARENT = 80;
+    HEIGHT_IN_PERCENT_OF_PARENT = 50;
 var gd3 = d3.select("div[id='{{key}}_reveal']")
     .style({
         width: WIDTH_IN_PERCENT_OF_PARENT + '%',
