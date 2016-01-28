@@ -25,17 +25,7 @@ def index(request):
 	# Average number of trips for each route #
 	##########################################
 
-	today = str(dt.now().date()) + "-avg_num_trips"
-	avg_num_trips = cache.get(today)
-	
-	if avg_num_trips is None:
-		avg_num_trips = {}
-		for route in ROUTES_DICT:
-			avg_num_trips_query = TripCount.objects.filter(route__contains = route).values('direction').annotate(avg_num_trips = Avg('count'))
-			avg_num_trips_sum = avg_num_trips_query.aggregate(Sum('avg_num_trips'))['avg_num_trips__sum']
-			avg_num_trips_rounded = "{:10.2f}".format(avg_num_trips_sum)
-			avg_num_trips[route] = avg_num_trips_rounded.strip()
-		cache.set(today, avg_num_trips, settings.TIMEOUT)
+	avg_num_trips = get_avg_num_trips()
 
 	######################
 	# Average trip times #
@@ -66,6 +56,12 @@ def calc_mad(data):
 
 def get_avg_trip_times():
 
+	# Before expensive calculation, check if it was already computed today and stored in Memcached
+	today = str(dt.now().date())
+	memcached_response = cache.get(today)
+	if memcached_response is not None:
+		return memcached_response
+
 	# Convert QuerySet to pd.DataFrame
 	queryset = CompletedTrip.objects.all().values('start_time', 'route', 'duration')
 	df = pd.DataFrame.from_records(queryset)
@@ -75,12 +71,6 @@ def get_avg_trip_times():
 
 	# Get unique routes as returned by QuerySet
 	routes = df['route'].unique()
-
-	# Before expensive calculation, check if it was already computed today and stored in Memcached
-	today = str(dt.now().date())
-	memcached_response = cache.get(today)
-	if memcached_response is not None:
-		return memcached_response
 
 	json, range_min_list, range_max_list = {}, {}, {}
 	for route in routes:
@@ -173,6 +163,25 @@ def get_trip_counts():
 		trips[route] = num_trips_first_dir + num_trips_second_dir if status else 0
 
 	return trips
+
+def get_avg_num_trips():
+	
+	today = str(dt.now().date()) + "-avg_num_trips"
+	avg_num_trips = cache.get(today)
+	
+	if avg_num_trips is not None:
+		return avg_num_trips
+
+	avg_num_trips = {}
+	for route in ROUTES_DICT:
+
+		avg_num_trips_query = TripCount.objects.filter(route__contains = route).values('direction').annotate(avg_num_trips = Avg('count'))
+		avg_num_trips_sum = avg_num_trips_query.aggregate(Sum('avg_num_trips'))['avg_num_trips__sum']
+		avg_num_trips_rounded = "{:10.2f}".format(avg_num_trips_sum)
+		avg_num_trips[route] = avg_num_trips_rounded.strip()
+
+	cache.set(today, avg_num_trips, settings.TIMEOUT)
+	return avg_num_trips
 
 def http_request_trip_counts(request):
 	
