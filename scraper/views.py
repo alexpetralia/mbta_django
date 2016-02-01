@@ -84,7 +84,7 @@ def get_avg_trip_times():
 		med = np.median(route_df['duration'])
 		# mad = calc_mad(route_df['duration'])
 		buffer_mins = med * .1
-		lowerLim, upperLim = med - 3 * buffer_mins, med + 8 * buffer_mins
+		lowerLim, upperLim = med - 4 * buffer_mins, med + 8 * buffer_mins
 		route_df = route_df[(route_df['duration'] > lowerLim) & (route_df['duration'] < upperLim)]
 
 		# Calculate average duration over an average day, resampled every 15 minutes
@@ -136,7 +136,7 @@ def get_trip_counts():
 	# Check if the MBTA API is still alive (ie. returning a .json response)
 	status = apiStatus.objects.all().values().first()['status']
 
-	# [THIS SQL IS ACTUALLY SLOWER THAN MULTIPLE QUERIES]
+	# [SQL IS ACTUALLY SLOWER THAN MULTIPLE QUERIES]
 	# from django.db import connection
 	# sql = ("SELECT route, SUM(count) as count FROM ( "
 	# 			"SELECT DISTINCT ON (direction, route) route, count "
