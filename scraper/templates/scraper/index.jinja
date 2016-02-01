@@ -200,7 +200,7 @@ Plotly.plot({{key|replace(" ", "_")}}, data, layout, {showLink: false});
 $("div[id='{{key}}_reveal']").hide(); // hide before user sees
 {% endfor %}
 {% for key, value in avg_trip_times.iteritems() %}
-window.onresize = function() { Plotly.Plots.resize( {{key|replace(" ", "_")}} ); };
+window.addEventListener('resize', function() { Plotly.Plots.resize( {{key|replace(" ", "_")}} ); });
 {% endfor %}
 })();
 
