@@ -99,7 +99,7 @@ You should now see the mbta_django app running locally at `http://localhost:8000
 
 In a production environment, we'll use nginx (webserver) to serve static files and uWSGI (application server) to serve the django app. For nginx to easily find the static files in one location, django offers a command to conveniently put them in one. From your app root, type:
 
-`(venv)>> python ./manage.py collectstatic`
+`(venv)>> python ./manage.py collectstatic --clear --noinput`
 
 This will copy all of your app's static files and any other files included under django's STATIC\_DIRS into the STATIC\_ROOT.
 
