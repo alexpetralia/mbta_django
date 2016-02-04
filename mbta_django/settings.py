@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '&s0()t_zpe_5%=ud+zn_r+d=4ne)6+xmriwyaih=_nzl^!kl0w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -200,6 +200,10 @@ if DEBUG:
     DEBUG_TOOLBAR_CONFIG = {
         'INTERCEPT_REDIRECTS': False,
     }
+
+    def show_toolbar(request):
+        return True
+    SHOW_TOOLBAR_CALLBACK = show_toolbar
 
 # For Memcached
 TIMEOUT = 60*60*12

@@ -41,15 +41,6 @@ def index(request):
 
 	return render(request, "scraper/index.jinja", locals())
 
-def get_direction(route):
-
-	try: 
-		direction = TripCount.objects.filter(route__contains = route).order_by('-time').values('direction').first()['direction']
-	except TypeError:
-		direction = None
-
-	return direction
-
 def calc_mad(data):
 
     return np.median(np.absolute(data - np.median(data)))
@@ -131,12 +122,22 @@ def get_avg_trip_times():
 
 	return json, range_min_list, range_max_list
 
+def get_direction(route):
+
+	try: 
+		direction = TripCount.objects.filter(route__contains = route).order_by('-time').values('direction').first()['direction']
+	except TypeError:
+		direction = None
+
+	return direction
+
 def get_trip_counts():
 
 	# Check if the MBTA API is still alive (ie. returning a .json response)
 	status = apiStatus.objects.all().values().first()['status']
 
 	# [SQL IS ACTUALLY SLOWER THAN MULTIPLE QUERIES]
+	# [HOWEVER, TOO MANY CONCURRENT QUERIES SINKS CPU USAGE -> MUST USE MEMCACHED]
 	# from django.db import connection
 	# sql = ("SELECT route, SUM(count) as count FROM ( "
 	# 			"SELECT DISTINCT ON (direction, route) route, count "
