@@ -203,7 +203,10 @@ if DEBUG:
 
     def show_toolbar(request):
         return True
-    SHOW_TOOLBAR_CALLBACK = show_toolbar
+    DEBUG_TOOLBAR_CONFIG = {
+        'INTERCEPT_REDIRECTS': False,
+        'SHOW_TOOLBAR_CALLBACK': show_toolbar,
+    }
 
 # For Memcached
 TIMEOUT = 60*60*12
