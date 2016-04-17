@@ -2,7 +2,7 @@
 
 import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-os.chdir(BASE_DIR)
+os.chdir(os.path.dirname(BASE_DIR))
 
 from datetime import timedelta, datetime as dt
 import requests
@@ -13,7 +13,7 @@ from .settings.api_key import API_KEY
 from .settings.routes import ROUTES
 from .models import CompletedTrip, TripCount, apiStatus
 
-WAIT_TIME_SEC = 10
+WAIT_TIME_SEC = 30
 
 class Route():
     
@@ -57,7 +57,7 @@ class Route():
             # PART 1: Update Direction
             this_direction.update_trips(relevant_trips)
             
-            # PART 2: Write count to postgres
+            # PART 2: Write count to database
             this_direction.write_count_to_sql(relevant_trips)
         
 class Direction():
@@ -125,7 +125,7 @@ class Direction():
                     del self.updated_trips[trip_id]
                     finished_trips.append(trip_obj)
                     
-                    # Only write to postgres if finished_trip is not a trip beginning before runtime               
+                    # Only write to database if finished_trip is not a trip beginning before runtime               
                     if trip_id not in self.ignored_trips:
                         trip_obj.write_trip_to_sql()
                 
@@ -144,7 +144,7 @@ class Direction():
     def write_count_to_sql(self, curr_trips):
         
         """
-        Takes the amount of current trips for each route and direction, then writes it to a postgres database at the time that the count was checked.
+        Takes the amount of current trips for each route and direction, then writes it to a  database at the time that the count was checked.
         
         Parameters:
         ``curr_trips`` (list): current trips housed in the Direction object
@@ -240,7 +240,7 @@ class Trip():
     def write_trip_to_sql(self):
         
         """ 
-        Once a trip is completed, it is written to the postgres database.
+        Once a trip is completed, it is written to the  database.
         """
 
         fmt = "%Y-%m-%d %H:%M:%S"
@@ -260,7 +260,7 @@ class Trip():
 def ignore_trips(response):
     
     """
-    At runtime, we cannot determine the 'true' start time of any trip. As a result, all of these trips should be ignored and never written to the postgres database.
+    At runtime, we cannot determine the 'true' start time of any trip. As a result, all of these trips should be ignored and never written to the  database.
     """
     
     ignored_trips = []
