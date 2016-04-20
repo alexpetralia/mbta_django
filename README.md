@@ -2,7 +2,7 @@
 
 **<a href="http://bostonmbta.info/" target="_blank">You can view this project live here.</a>**
 
-MBTA Live is a django-powered web application which displays, for each MBTA route in Boston, the number of currently active MBTA trips and the average trip duration over a typical day. Every 10 seconds, a `celery` background worker scrapes .json data from the <a href="http://realtime.mbta.com/portal" target="_blank">MBTA Developer Portal</a> containing information on all ongoing trips. The time at which new trips (*see footnote 1*) appear is saved, as well as when they disappear - the difference yields the trip's duration. Each completed trip is saved in a postgres database.
+MBTA Live is a django-powered web application which displays, for each MBTA route in Boston, the number of currently active MBTA trips and the average trip duration over a typical day. Every 10 seconds, a `celery` background worker scrapes .json data from the <a href="http://realtime.mbta.com/portal" target="_blank">MBTA Developer Portal</a> containing information on all ongoing trips. The time at which new trips (*see footnote 1*) appear is saved, as well as when they disappear - the difference yields the trip's duration. Each completed trip is saved in a database.
 
 The primary motivation for this project was to visualize when certain routes are busiest throughout a typical day. Additionally, this project was designed around using as many new technologies as possible as a learning experience.
 
@@ -36,6 +36,8 @@ If you run into permissions issues, do **not** use `sudo` to circumvent them. If
 `sudo apt-get install postgresql postgresql-contrib`
 
 **5. Configure postgres and create your database**
+
+*UPDATE*: this program no longer uses postgres.
 
 For this django webapp to work, django requires certain postgres settings. They are:
 
@@ -209,7 +211,7 @@ Note: ensure that `uwsgi_ctl` is configured to use `--http` and not `--socket`.
 ### Software stack
 * **Web framework:** Django
 * **Templating language:** Jinja2
-* **Database:** Postgres
+* **Database:** sqlite3
 * **Webserver:** nginx
 * **Application server:** uWSGI
 * **Caching system:** Memcached

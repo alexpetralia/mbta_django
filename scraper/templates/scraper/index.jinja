@@ -8,45 +8,6 @@
 
 <div class='container-fluid'>
 
-	<div class='first row'>
-		<div class='col-lg-custom-offset col-md-custom-offset col-sm-custom-offset'></div>
-		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div id="Red Line" class='col-lg-12 col-md-12 col-sm-12 col-xs-12 padded'>
-				<div class='red block'> </div>
-				<h4> Red Line </h4>
-				<span id='Red Line_trips' class='big'>{{ trips["Red Line"] }}</span>
-				<h6> ({{ avg_num_trips["Red Line"] }}) </h6>
-			</div>
-			<div class='visible-xs-block'>&nbsp;</div>
-		</div>
-		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div id="Orange Line" class='col-lg-12 col-md-12 col-sm-12 col-xs-12 padded'>
-				<div class='orange block'> </div>
-				<h4> Orange Line </h4>
-				<span id='Orange Line_trips' class='big'>{{ trips["Orange Line"] }}</span>
-				<h6> ({{ avg_num_trips["Orange Line"] }}) </h6>
-			</div>
-			<div class='visible-xs-block'>&nbsp;</div>
-		</div>
-		<div class='col-lg-3 col-md-3 col-sm-3'>
-			<div id="Blue Line" class='col-lg-12 col-md-12 col-sm-12 col-xs-12 padded'>
-				<div class='blue block'> </div>
-				<h4> Blue Line </h4>
-				<span id='Blue Line_trips' class='big'>{{ trips["Blue Line"] }}</span>
-				<h6> ({{ avg_num_trips["Blue Line"] }}) </h6>
-			</div>
-			<div class='visible-xs-block'>&nbsp;</div>
-		</div>
-	</div>
-
-	<div class='spacer visible-lg-block visible-md-block visible-sm-block'></div>
-
-	<div id='Red Line_reveal' class='plotly' style='display: none; width: 1080px; height: 400px;'> </div>
-
-	<div id='Orange Line_reveal' class='plotly' style='display: none; width: 1080px; height: 400px;'> </div>
-
-	<div id='Blue Line_reveal' class='plotly' style='display: none; width: 1080px; height: 400px;'> </div>
-
 	<div class='row'>
 		<div class='col-lg-3 col-md-3 col-sm-3'>
 			<div id='Green Line B' class='col-lg-12 col-md-12 col-sm-12 col-xs-12 padded'>
@@ -144,6 +105,45 @@
 	<div id='Silver Line SL4_reveal' class='plotly' style='display: none; width: 1080px; height: 400px;'> </div>
 
 	<div id='Silver Line SL5_reveal' class='plotly' style='display: none; width: 1080px; height: 400px;'> </div>
+
+	<div class='last row'>
+		<div class='col-lg-custom-offset col-md-custom-offset col-sm-custom-offset'></div>
+		<div class='col-lg-3 col-md-3 col-sm-3'>
+			<div id="Red Line" class='col-lg-12 col-md-12 col-sm-12 col-xs-12 padded'>
+				<div class='red block'> </div>
+				<h4> Red Line </h4>
+				<span id='Red Line_trips' class='big'>{{ trips["Red Line"] }}</span>
+				<h6> ({{ avg_num_trips["Red Line"] }}) </h6>
+			</div>
+			<div class='visible-xs-block'>&nbsp;</div>
+		</div>
+		<div class='col-lg-3 col-md-3 col-sm-3'>
+			<div id="Orange Line" class='col-lg-12 col-md-12 col-sm-12 col-xs-12 padded'>
+				<div class='orange block'> </div>
+				<h4> Orange Line </h4>
+				<span id='Orange Line_trips' class='big'>{{ trips["Orange Line"] }}</span>
+				<h6> ({{ avg_num_trips["Orange Line"] }}) </h6>
+			</div>
+			<div class='visible-xs-block'>&nbsp;</div>
+		</div>
+		<div class='col-lg-3 col-md-3 col-sm-3'>
+			<div id="Blue Line" class='col-lg-12 col-md-12 col-sm-12 col-xs-12 padded'>
+				<div class='blue block'> </div>
+				<h4> Blue Line </h4>
+				<span id='Blue Line_trips' class='big'>{{ trips["Blue Line"] }}</span>
+				<h6> ({{ avg_num_trips["Blue Line"] }}) </h6>
+			</div>
+			<div class='visible-xs-block'>&nbsp;</div>
+		</div>
+	</div>
+
+	<div class='spacer visible-lg-block visible-md-block visible-sm-block'></div>
+
+	<div id='Red Line_reveal' class='plotly' style='display: none; width: 1080px; height: 400px;'> </div>
+
+	<div id='Orange Line_reveal' class='plotly' style='display: none; width: 1080px; height: 400px;'> </div>
+
+	<div id='Blue Line_reveal' class='plotly' style='display: none; width: 1080px; height: 400px;'> </div>
 
 </div>
 
